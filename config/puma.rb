@@ -15,7 +15,7 @@ plugin :tmp_restart
 bind "tcp://0.0.0.0:#{ENV.fetch('PORT') { 4567 }}"
 
 # Workers (for production, you can increase this)
-workers ENV.fetch("WEB_CONCURRENCY") { 2 }
+workers ENV.fetch("WEB_CONCURRENCY") { 0 }
 
 # Preload application for better performance
 preload_app!
