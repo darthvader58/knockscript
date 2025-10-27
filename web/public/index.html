@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KnockScript Online Compiler</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1> KnockScript Compiler</h1>
+            <p class="tagline">The Programming Language Based on Knock Knock Jokes</p>
+        </header>
+        
+        <div class="main-content">
+            <div class="editor-section">
+                <div class="toolbar">
+                    <h2>Code Editor</h2>
+                    <div class="toolbar-buttons">
+                        <select id="exampleSelector" class="example-selector">
+                            <option value="">Load Example...</option>
+                            <option value="hello_world">Hello World</option>
+                            <option value="arithmetic">Arithmetic</option>
+                            <option value="loops">Loops & Conditionals</option>
+                            <option value="classes">Classes (OOP)</option>
+                        </select>
+                        <button id="runBtn" class="btn btn-primary">▶ Run Code</button>
+                        <button id="clearBtn" class="btn btn-secondary">Clear</button>
+                    </div>
+                </div>
+                <textarea id="codeEditor" class="code-editor" placeholder="Write your KnockScript code here...">Knock knock
+Who's there?
+Print
+Print who? "Hello, World!"</textarea>
+            </div>
+            
+            <div class="output-section">
+                <div class="toolbar">
+                    <h2>Output</h2>
+                    <button id="clearOutputBtn" class="btn btn-secondary">Clear Output</button>
+                </div>
+                <div id="output" class="output-area">
+                    <div class="output-placeholder">Run your code to see output here...</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="info-section">
+            <h2>Quick Reference</h2>
+            <div class="reference-grid">
+                <div class="reference-card">
+                    <h3>Variables</h3>
+                    <pre>Knock knock
+Who's there?
+Set
+Set who? x to 10</pre>
+                </div>
+                
+                <div class="reference-card">
+                    <h3>Print</h3>
+                    <pre>Knock knock
+Who's there?
+Print
+Print who? "Hello!"</pre>
+                </div>
+                
+                <div class="reference-card">
+                    <h3>If Statement</h3>
+                    <pre>Knock knock
+Who's there?
+If
+If who? x greater than 5
+    [statements]
+Otherwise
+    [statements]
+Done</pre>
+                </div>
+                
+                <div class="reference-card">
+                    <h3>While Loop</h3>
+                    <pre>Knock knock
+Who's there?
+While
+While who? x less than 10
+    [statements]
+Done</pre>
+                </div>
+                
+                <div class="reference-card">
+                    <h3>For Loop</h3>
+                    <pre>Knock knock
+Who's there?
+For
+For who?
+For i from 1 to 5
+    [statements]
+Done</pre>
+                </div>
+                
+                <div class="reference-card">
+                    <h3>Classes</h3>
+                    <pre>Knock knock
+Who's there?
+Class
+Class who? Person with name and age
+
+Knock knock
+Who's there?
+Set
+Set who? p to new Person with name "Alice" and age 30</pre>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>Created with Ruby • An Esoteric Programming Language</p>
+            <p>Operations: <code>plus, minus, times, divided by</code></p>
+            <p>Comparisons: <code>greater than, less than, equal to, not equal to</code></p>
+        </footer>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
