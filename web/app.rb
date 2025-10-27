@@ -4,7 +4,23 @@ require_relative '../knockscript'
 
 # Set Sinatra to run on all interfaces
 set :bind, '0.0.0.0'
-set :port, 4567
+set :port, ENV['PORT'] || 4567
+
+# Enable sessions and set production settings
+configure :production do
+  set :server, :puma
+end
+
+# CORS headers for API requests
+before do
+  headers 'Access-Control-Allow-Origin' => '*',
+          'Access-Control-Allow-Methods' => ['GET', 'POST', 'OPTIONS'],
+          'Access-Control-Allow-Headers' => 'Content-Type'
+end
+
+options '*' do
+  200
+end
 
 # Serve static files
 set :public_folder, File.dirname(__FILE__) + '/public'
@@ -32,6 +48,7 @@ post '/compile' do
     { success: false, error: e.message }.to_json
   end
 end
+
 get '/examples' do
   content_type :json
   
