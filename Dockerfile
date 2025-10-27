@@ -24,4 +24,4 @@ EXPOSE 4567
 ENV RACK_ENV=production
 
 # Start the application with Puma
-CMD ["bundle", "exec", "puma", "-C", "config/puma.rb", "config.ru"]
+CMD ["bundle", "exec", "ruby", "web/app.rb", "-o", "0.0.0.0"]

@@ -3,7 +3,7 @@ builder = "DOCKERFILE"
 dockerfilePath = "Dockerfile"
 
 [deploy]
-startCommand = "bundle exec puma -C config/puma.rb config.ru"
+startCommand = "bundle exec ruby web/app.rb -o 0.0.0.0"
 healthcheckPath = "/"
 healthcheckTimeout = 300
 restartPolicyType = "ON_FAILURE"
