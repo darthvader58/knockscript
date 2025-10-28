@@ -47,25 +47,21 @@ class Lexer
         next
       end
       
-      # Check for string literals
       if peek == '"'
         tokenize_string
         next
       end
       
-      # Check for numbers
       if peek =~ /\d/
         tokenize_number
         next
       end
       
-      # Check for identifiers and keywords
       if peek =~ /[a-zA-Z_]/
         tokenize_identifier
         next
       end
       
-      # Single character tokens
       case peek
       when ','
         @tokens << Token.new(:comma, ',', @line)
@@ -139,7 +135,7 @@ class Lexer
     raise "Unterminated string at line #{@line}" unless peek == '"'
     
     value = @source[start...@position]
-    advance # Skip closing quote
+    advance 
     
     @tokens << Token.new(:string, value, @line)
   end
@@ -151,9 +147,9 @@ class Lexer
       advance
     end
     
-    # Handle decimal point
+    # for decimals
     if peek == '.' && peek(1) =~ /\d/
-      advance # Skip dot
+      advance 
       while peek && peek =~ /\d/
         advance
       end
@@ -172,13 +168,12 @@ class Lexer
     
     value = @source[start...@position]
     
-    # Check if it's a keyword
+    # keyword check
     if KEYWORDS.include?(value)
       @tokens << Token.new(:keyword, value, @line)
     elsif value == 'true' || value == 'false'
       @tokens << Token.new(:boolean, value == 'true', @line)
     else
-      # Check if it's followed by "who?"
       skip_whitespace_except_newline
       if match_pattern(/\Awho\?/i)
         @tokens << Token.new(:who_question, "#{value} who?", @line)

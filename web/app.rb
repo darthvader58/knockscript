@@ -1,7 +1,6 @@
 require 'sinatra'
 require 'json'
 
-# Load knockscript with error handling
 begin
   require_relative '../knockscript'
   KNOCKSCRIPT_LOADED = true
@@ -14,12 +13,11 @@ rescue => e
   KNOCKSCRIPT_LOADED = false
 end
 
-# Configuration
 set :bind, '0.0.0.0'
 set :port, ENV['PORT'] || 4567
 set :public_folder, File.dirname(__FILE__) + '/public'
 
-# CORS headers
+#CORS 
 before do
   headers 'Access-Control-Allow-Origin' => '*',
           'Access-Control-Allow-Methods' => ['GET', 'POST', 'OPTIONS'],
@@ -30,7 +28,6 @@ options '*' do
   200
 end
 
-# Startup logging
 puts "=" * 60
 puts "KnockScript Web Compiler Starting..."
 puts "=" * 60
@@ -39,7 +36,6 @@ puts "Port: #{ENV['PORT'] || 4567}"
 puts "KnockScript loaded: #{KNOCKSCRIPT_LOADED}"
 puts "=" * 60
 
-# Rest of your endpoints...
 get '/health' do
   content_type :json
   {

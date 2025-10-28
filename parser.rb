@@ -125,18 +125,14 @@ class Parser
   end
   
   def parse_print_statement
-    # Print "Hello"
-    # Print x
     expression = parse_expression
     PrintStatement.new(expression)
   end
   
   def parse_if_statement
-    # If x greater than 5
     condition = parse_condition
     skip_newlines
     
-    # Parse if body
     if_body = []
     while !eof? && !check_keyword('Otherwise') && !check_keyword('Done')
       skip_newlines
@@ -145,7 +141,6 @@ class Parser
       skip_newlines
     end
     
-    # Parse else body
     else_body = []
     if check_keyword('Otherwise')
       advance
@@ -219,7 +214,6 @@ class Parser
   end
   
   def parse_method_definition
-    # Method greet for Person
     method_name = expect(:identifier).value
     expect_keyword('for')
     class_name = expect(:identifier).value
@@ -239,7 +233,6 @@ class Parser
   end
   
   def parse_method_call_statement
-    # Call greet on person1
     method_name = expect(:identifier).value
     expect_keyword('on')
     object_name = expect(:identifier).value
@@ -248,7 +241,6 @@ class Parser
   end
   
   def parse_get_attribute_statement
-    # Get name from person1
     attribute_name = expect(:identifier).value
     expect_keyword('from')
     object_name = expect(:identifier).value
@@ -257,7 +249,6 @@ class Parser
   end
   
   def parse_push_statement
-    # Push 4 to mylist
     value = parse_expression
     expect_keyword('to')
     array_name = expect(:identifier).value
@@ -266,7 +257,6 @@ class Parser
   end
   
   def parse_pop_statement
-    # Pop from mylist
     expect_keyword('from')
     array_name = expect(:identifier).value
     
@@ -274,8 +264,6 @@ class Parser
   end
   
   def parse_condition
-    # x greater than 5
-    # x equal to 10
     left = parse_expression
     
     operator = nil
@@ -354,11 +342,9 @@ class Parser
       advance
       Literal.new(token.value)
     when :identifier
-      # Could be: variable, "new ClassName", "value of object", etc.
       if token.value.downcase == 'new'
         parse_new_instance
       elsif peek_token&.type == :keyword && peek_token.value == 'of'
-        # value of counter
         attribute = token.value
         advance
         expect_keyword('of')

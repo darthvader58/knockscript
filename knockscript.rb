@@ -23,7 +23,7 @@ class KnockScript
   end
 end
 
-# If run directly from command line
+# directly from cli
 if __FILE__ == $0
   if ARGV.length != 1
     puts "Usage: ruby knockscript.rb <filename>"

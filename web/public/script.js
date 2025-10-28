@@ -1,6 +1,3 @@
-// script.js
-// Client-side JavaScript for KnockScript compiler
-
 const codeEditor = document.getElementById('codeEditor');
 const output = document.getElementById('output');
 const runBtn = document.getElementById('runBtn');
@@ -8,7 +5,6 @@ const clearBtn = document.getElementById('clearBtn');
 const clearOutputBtn = document.getElementById('clearOutputBtn');
 const exampleSelector = document.getElementById('exampleSelector');
 
-// Example programs
 const examples = {
     hello_world: `Knock knock
 Who's there?
@@ -96,7 +92,6 @@ Call
 Call who? greet on alice`
 };
 
-// Run code
 runBtn.addEventListener('click', async () => {
     const code = codeEditor.value;
     
@@ -133,7 +128,6 @@ runBtn.addEventListener('click', async () => {
     }
 });
 
-// Clear editor
 clearBtn.addEventListener('click', () => {
     if (confirm('Are you sure you want to clear the editor?')) {
         codeEditor.value = '';
@@ -141,21 +135,18 @@ clearBtn.addEventListener('click', () => {
     }
 });
 
-// Clear output
 clearOutputBtn.addEventListener('click', () => {
     output.innerHTML = '<div class="output-placeholder">Run your code to see output here...</div>';
 });
 
-// Load examples
 exampleSelector.addEventListener('change', (e) => {
     const exampleName = e.target.value;
     if (exampleName && examples[exampleName]) {
         codeEditor.value = examples[exampleName];
     }
-    e.target.value = ''; // Reset selector
+    e.target.value = '';
 });
 
-// Show output
 function showOutput(text, success) {
     output.innerHTML = '';
     const outputDiv = document.createElement('div');
@@ -164,15 +155,15 @@ function showOutput(text, success) {
     output.appendChild(outputDiv);
 }
 
-// Keyboard shortcuts
+//Keyboard shortcuts
 codeEditor.addEventListener('keydown', (e) => {
-    // Run with Ctrl+Enter or Cmd+Enter
+    //run code
     if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
         e.preventDefault();
         runBtn.click();
     }
     
-    // Tab key for indentation
+    //indent with Tab
     if (e.key === 'Tab') {
         e.preventDefault();
         const start = codeEditor.selectionStart;
@@ -184,12 +175,10 @@ codeEditor.addEventListener('keydown', (e) => {
     }
 });
 
-// Auto-save to localStorage
 codeEditor.addEventListener('input', () => {
     localStorage.setItem('knockscript_code', codeEditor.value);
 });
 
-// Load saved code on page load
 window.addEventListener('load', () => {
     const savedCode = localStorage.getItem('knockscript_code');
     if (savedCode) {
