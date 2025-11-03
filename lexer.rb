@@ -22,13 +22,13 @@ class Lexer
       
       break if @position >= @source.length
       
-      # Skip comments
+      #Skip comments
       if peek == '#'
         skip_comment
         next
       end
       
-      # Handle newlines
+      #Handle newlines
       if peek == "\n"
         @tokens << Token.new(:newline, "\n", @line) unless last_token_is_newline?
         advance

@@ -12,16 +12,15 @@ WORKDIR /app
 
 # Copy Gemfile and install gems
 COPY Gemfile ./
+COPY Gemfile.lock ./
 RUN bundle install --without development test
 
 # Copy application code
 COPY . .
 
-# Expose port (Railway will set PORT env variable)
-EXPOSE 4567
-
 # Set environment to production
 ENV RACK_ENV=production
 
-# Start the application with Puma
-CMD ["bundle", "exec", "ruby", "web/app.rb", "-o", "0.0.0.0"]
+# Railway will set PORT env variable
+# Start the application with proper binding
+CMD bundle exec ruby web/app.rb -o 0.0.0.0 -p ${PORT:-4567}

@@ -7,9 +7,11 @@ begin
   puts "✓ KnockScript interpreter loaded successfully"
 rescue LoadError => e
   puts "✗ Failed to load knockscript: #{e.message}"
+  puts "  Backtrace: #{e.backtrace.first(5).join("\n  ")}"
   KNOCKSCRIPT_LOADED = false
 rescue => e
   puts "✗ Unexpected error loading knockscript: #{e.class} - #{e.message}"
+  puts "  Backtrace: #{e.backtrace.first(5).join("\n  ")}"
   KNOCKSCRIPT_LOADED = false
 end
 
@@ -17,7 +19,13 @@ set :bind, '0.0.0.0'
 set :port, ENV['PORT'] || 4567
 set :public_folder, File.dirname(__FILE__) + '/public'
 
-#CORS 
+# Enable logging
+set :logging, true
+set :dump_errors, true
+set :raise_errors, false
+set :show_exceptions, false
+
+# CORS headers
 before do
   headers 'Access-Control-Allow-Origin' => '*',
           'Access-Control-Allow-Methods' => ['GET', 'POST', 'OPTIONS'],
@@ -33,20 +41,39 @@ puts "KnockScript Web Compiler Starting..."
 puts "=" * 60
 puts "Environment: #{ENV['RACK_ENV'] || 'development'}"
 puts "Port: #{ENV['PORT'] || 4567}"
+puts "Bind: 0.0.0.0"
 puts "KnockScript loaded: #{KNOCKSCRIPT_LOADED}"
+puts "Public folder: #{settings.public_folder}"
 puts "=" * 60
 
+# Health check endpoint - must return 200 OK for Railway
 get '/health' do
   content_type :json
+  status 200
   {
     status: 'ok',
     knockscript_loaded: KNOCKSCRIPT_LOADED,
-    timestamp: Time.now.to_s
+    timestamp: Time.now.to_s,
+    port: settings.port
   }.to_json
 end
 
 get '/' do
-  send_file File.join(settings.public_folder, 'index.html')
+  begin
+    index_path = File.join(settings.public_folder, 'index.html')
+    puts "Attempting to serve index.html from: #{index_path}"
+    
+    if File.exist?(index_path)
+      send_file index_path
+    else
+      puts "ERROR: index.html not found at #{index_path}"
+      halt 404, "index.html not found"
+    end
+  rescue => e
+    puts "ERROR serving /: #{e.message}"
+    puts "  Backtrace: #{e.backtrace.first(5).join("\n  ")}"
+    halt 500, "Internal server error"
+  end
 end
 
 post '/compile' do
@@ -63,6 +90,8 @@ post '/compile' do
   rescue JSON::ParserError => e
     { success: false, error: "Invalid JSON: #{e.message}" }.to_json
   rescue => e
+    puts "ERROR in /compile: #{e.message}"
+    puts "  Backtrace: #{e.backtrace.first(10).join("\n  ")}"
     { success: false, error: e.message }.to_json
   end
 end
@@ -81,6 +110,18 @@ get '/examples' do
     
     examples.to_json
   rescue => e
+    puts "ERROR in /examples: #{e.message}"
     { error: e.message }.to_json
   end
 end
+
+# Catch-all error handler
+error do
+  e = env['sinatra.error']
+  puts "ERROR: #{e.class} - #{e.message}"
+  puts "  Backtrace: #{e.backtrace.first(10).join("\n  ")}"
+  content_type :json
+  { error: e.message }.to_json
+end
+
+puts "Server configured and ready to start..."
