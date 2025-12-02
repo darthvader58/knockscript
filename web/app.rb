@@ -6,12 +6,14 @@ begin
   KNOCKSCRIPT_LOADED = true
   puts "✓ KnockScript interpreter loaded successfully"
 rescue LoadError => e
-  puts "✗ Failed to load knockscript: #{e.message}"
+  puts "✗ Failed to load knockscript (LoadError): #{e.message}"
   puts "  Backtrace: #{e.backtrace.first(5).join("\n  ")}"
+  puts "  Server will continue running in degraded mode"
   KNOCKSCRIPT_LOADED = false
-rescue => e
+rescue StandardError => e
   puts "✗ Unexpected error loading knockscript: #{e.class} - #{e.message}"
   puts "  Backtrace: #{e.backtrace.first(5).join("\n  ")}"
+  puts "  Server will continue running in degraded mode"
   KNOCKSCRIPT_LOADED = false
 end
 
@@ -39,22 +41,27 @@ end
 puts "=" * 60
 puts "KnockScript Web Compiler Starting..."
 puts "=" * 60
+puts "Server: Puma (production-ready)"
 puts "Environment: #{ENV['RACK_ENV'] || 'development'}"
+puts "Binding: 0.0.0.0:#{ENV['PORT'] || 4567}"
 puts "Port: #{ENV['PORT'] || 4567}"
-puts "Bind: 0.0.0.0"
 puts "KnockScript loaded: #{KNOCKSCRIPT_LOADED}"
 puts "Public folder: #{settings.public_folder}"
+puts "=" * 60
+puts "Server ready to accept connections"
 puts "=" * 60
 
 # Health check endpoint - must return 200 OK for Railway
 get '/health' do
+  puts "[#{Time.now.utc}] Healthcheck request received"
   content_type :json
   status 200
   {
     status: 'ok',
     knockscript_loaded: KNOCKSCRIPT_LOADED,
-    timestamp: Time.now.to_s,
-    port: settings.port
+    timestamp: Time.now.utc.iso8601,
+    port: settings.port,
+    server: 'puma'
   }.to_json
 end
 

@@ -22,5 +22,5 @@ COPY . .
 ENV RACK_ENV=production
 
 # Railway will set PORT env variable
-# Start the application with proper binding
-CMD bundle exec ruby web/app.rb -o 0.0.0.0 -p ${PORT:-4567}
+# Start the application with Puma for production performance
+CMD bundle exec puma web/app.rb -b tcp://0.0.0.0:${PORT:-4567} -e ${RACK_ENV:-production}
