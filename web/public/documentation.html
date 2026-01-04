@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KnockScript Documentation</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="docs.css">
+    <link rel="icon" type="image/jpeg" href="favicon.jpeg">
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Top Navigation -->
+    <nav class="top-nav">
+        <div class="nav-content">
+            <div class="nav-left">
+                <div class="logo">
+                    <img src="favicon.jpeg" alt="KnockScript Logo" class="logo-image">
+                    <span class="logo-text">KnockScript</span>
+                </div>
+            </div>
+            <div class="nav-right">
+                <a href="index.html" class="nav-link">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="16 18 22 12 16 6"/>
+                        <polyline points="8 6 2 12 8 18"/>
+                    </svg>
+                    Compiler
+                </a>
+                <a href="https://github.com/darthvader58/knockscript" target="_blank" class="nav-link">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                    </svg>
+                    GitHub
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="docs-container">
+        <!-- Sidebar TOC -->
+        <aside class="docs-sidebar">
+            <div class="toc">
+                <div class="toc-header">Contents</div>
+                <a href="#getting-started" class="toc-item">Getting Started</a>
+                <a href="#installation" class="toc-item toc-sub">Installation</a>
+                <a href="#quick-start" class="toc-item toc-sub">Quick Start</a>
+                
+                <a href="#language-syntax" class="toc-item">Language Syntax</a>
+                <a href="#hello-world" class="toc-item toc-sub">Hello World</a>
+                <a href="#variables" class="toc-item toc-sub">Variables</a>
+                <a href="#arithmetic" class="toc-item toc-sub">Arithmetic</a>
+                <a href="#conditionals" class="toc-item toc-sub">Conditionals</a>
+                <a href="#loops" class="toc-item toc-sub">Loops</a>
+                <a href="#classes" class="toc-item toc-sub">Classes & OOP</a>
+                <a href="#arrays" class="toc-item toc-sub">Arrays</a>
+                
+                <a href="#features" class="toc-item">Features</a>
+                <a href="#project-structure" class="toc-item">Project Structure</a>
+                <a href="#contributing" class="toc-item">Contributing</a>
+                <a href="#api-reference" class="toc-item">API Reference</a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="docs-content">
+            <!-- Hero Section -->
+            <div class="docs-hero">
+                <h1>KnockScript Documentation</h1>
+                <p class="docs-subtitle">A programming language based on knock-knock jokes. Every statement follows the classic "Knock knock" → "Who's there?" → Command → "Command who?" pattern.</p>
+                <div class="hero-buttons">
+                    <a href="#getting-started" class="btn btn-primary">Get Started</a>
+                    <a href="index.html" class="btn btn-secondary">Try Console</a>
+                </div>
+            </div>
+
+            <!-- Getting Started -->
+            <section id="getting-started" class="docs-section">
+                <h2>Getting Started</h2>
+                <p>Welcome to KnockScript! This guide will help you get up and running with the most lame programming language.</p>
+            </section>
+
+            <section id="installation" class="docs-section">
+                <h3>Installation</h3>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span>Terminal</span>
+                        <button class="copy-btn" data-copy="git clone https://github.com/darthvader58/knockscript.git
+cd knockscript
+bundle install">Copy</button>
+                    </div>
+                    <pre><code>git clone https://github.com/darthvader58/knockscript.git
+cd knockscript
+bundle install</code></pre>
+                </div>
+                
+                <div class="info-box">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <line x1="12" y1="16" x2="12" y2="12"/>
+                        <line x1="12" y1="8" x2="12.01" y2="8"/>
+                    </svg>
+                    <div>
+                        <strong>Prerequisites:</strong> Ruby 3.2.0 or higher
+                    </div>
+                </div>
+            </section>
+
+            <section id="quick-start" class="docs-section">
+                <h3>Quick Start</h3>
+                
+                <h4>Run a Program</h4>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span>Terminal</span>
+                        <button class="copy-btn" data-copy="ruby knockscript.rb examples/hello_world.ks">Copy</button>
+                    </div>
+                    <pre><code>ruby knockscript.rb examples/hello_world.ks</code></pre>
+                </div>
+
+                <h4>Web Interface</h4>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span>Terminal</span>
+                        <button class="copy-btn" data-copy="ruby web/app.rb">Copy</button>
+                    </div>
+                    <pre><code>ruby web/app.rb
+# Visit http://localhost:4567</code></pre>
+                </div>
+            </section>
+
+            <!-- Language Syntax -->
+            <section id="language-syntax" class="docs-section">
+                <h2>Language Syntax</h2>
+                <p>KnockScript follows a unique syntax pattern based on knock-knock jokes. Every statement begins with the classic setup and punchline structure.</p>
+            </section>
+
+            <section id="hello-world" class="docs-section">
+                <h3>Hello World</h3>
+                <p>Your first KnockScript program:</p>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span>hello_world.ks</span>
+                        <button class="copy-btn" data-copy='Knock knock
+Who&apos;s there?
+Print
+Print who? "Hello, World!"'>Copy</button>
+                    </div>
+                    <pre><code>Knock knock
+Who's there?
+Print
+Print who? "Hello, World!"</code></pre>
+                </div>
+            </section>
+
+            <section id="variables" class="docs-section">
+                <h3>Variables</h3>
+                <p>Declare and assign values to variables:</p>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span>variables.ks</span>
+                        <button class="copy-btn" data-copy="Knock knock
+Who's there?
+Set
+Set who? x to 42">Copy</button>
+                    </div>
+                    <pre><code>Knock knock
+Who's there?
+Set
+Set who? x to 42</code></pre>
+                </div>
+            </section>
+
+            <section id="arithmetic" class="docs-section">
+                <h3>Arithmetic Operations</h3>
+                <p>Perform mathematical calculations:</p>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span>arithmetic.ks</span>
+                    </div>
+                    <pre><code>Knock knock
+Who's there?
+Set
+Set who? x to 10
+
+Knock knock
+Who's there?
+Set
+Set who? y to 5
+
+Knock knock
+Who's there?
+Set
+Set who? sum to x plus y
+
+Knock knock
+Who's there?
+Set
+Set who? product to x times y
+
+Knock knock
+Who's there?
+Set
+Set who? quotient to x divided by y</code></pre>
+                </div>
+                
+                <div class="info-box">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <line x1="12" y1="16" x2="12" y2="12"/>
+                        <line x1="12" y1="8" x2="12.01" y2="8"/>
+                    </svg>
+                    <div>
+                        <strong>Operators:</strong> <code>plus</code>, <code>minus</code>, <code>times</code>, <code>divided by</code>
+                    </div>
+                </div>
+            </section>
+
+            <section id="conditionals" class="docs-section">
+                <h3>Conditionals (If/Else)</h3>
+                <p>Control flow with conditional statements:</p>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span>conditionals.ks</span>
+                    </div>
+                    <pre><code>Knock knock
+Who's there?
+If
+If who? x greater than 10
+    Knock knock
+    Who's there?
+    Print
+    Print who? "x is big"
+Otherwise
+    Knock knock
+    Who's there?
+    Print
+    Print who? "x is small"
+Done</code></pre>
+                </div>
+                
+                <div class="info-box">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <line x1="12" y1="16" x2="12" y2="12"/>
+                        <line x1="12" y1="8" x2="12.01" y2="8"/>
+                    </svg>
+                    <div>
+                        <strong>Comparison Operators:</strong> <code>greater than</code>, <code>less than</code>, <code>equal to</code>, <code>not equal to</code>
+                    </div>
+                </div>
+            </section>
+
+            <section id="loops" class="docs-section">
+                <h3>Loops</h3>
+                
+                <h4>While Loops</h4>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span>while_loop.ks</span>
+                    </div>
+                    <pre><code>Knock knock
+Who's there?
+Set
+Set who? counter to 1
+
+Knock knock
+Who's there?
+While
+While who? counter less than 6
+    Knock knock
+    Who's there?
+    Print
+    Print who? counter
+    
+    Knock knock
+    Who's there?
+    Set
+    Set who? counter to counter plus 1
+Done</code></pre>
+                </div>
+
+                <h4>For Loops</h4>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span>for_loop.ks</span>
+                    </div>
+                    <pre><code>Knock knock
+Who's there?
+For
+For who? i from 1 to 5
+    Knock knock
+    Who's there?
+    Print
+    Print who? i
+Done</code></pre>
+                </div>
+            </section>
+
+            <section id="classes" class="docs-section">
+                <h3>Classes & Object-Oriented Programming</h3>
+                
+                <h4>Defining a Class</h4>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span>class_definition.ks</span>
+                    </div>
+                    <pre><code>Knock knock
+Who's there?
+Class
+Class who? Person with name and age</code></pre>
+                </div>
+
+                <h4>Creating Methods</h4>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span>method_definition.ks</span>
+                    </div>
+                    <pre><code>Knock knock
+Who's there?
+Method
+Method who? greet for Person
+    Knock knock
+    Who's there?
+    Print
+    Print who? "Hello, my name is "
+    
+    Knock knock
+    Who's there?
+    Print
+    Print who? name
+Done</code></pre>
+                </div>
+
+                <h4>Creating Instances</h4>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span>instantiation.ks</span>
+                    </div>
+                    <pre><code>Knock knock
+Who's there?
+Set
+Set who? alice to new Person with name "Alice" and age 30</code></pre>
+                </div>
+
+                <h4>Calling Methods</h4>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span>method_call.ks</span>
+                    </div>
+                    <pre><code>Knock knock
+Who's there?
+Call
+Call who? greet on alice</code></pre>
+                </div>
+
+                <h4>Setting Attributes</h4>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span>set_attribute.ks</span>
+                    </div>
+                    <pre><code>Knock knock
+Who's there?
+Set
+Set who? age of alice to 31</code></pre>
+                </div>
+            </section>
+
+            <section id="arrays" class="docs-section">
+                <h3>Arrays</h3>
+                
+                <h4>Creating Arrays</h4>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span>arrays.ks</span>
+                    </div>
+                    <pre><code>Knock knock
+Who's there?
+Set
+Set who? numbers to list with 1, 2, 3, 4, 5</code></pre>
+                </div>
+
+                <h4>Array Operations</h4>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span>array_operations.ks</span>
+                    </div>
+                    <pre><code>Knock knock
+Who's there?
+Push
+Push who? 6 to numbers
+
+Knock knock
+Who's there?
+Pop
+Pop who? from numbers</code></pre>
+                </div>
+            </section>
+
+            <!-- Features -->
+            <section id="features" class="docs-section">
+                <h2>Features</h2>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="16 18 22 12 16 6"/>
+                            <polyline points="8 6 2 12 8 18"/>
+                        </svg>
+                        <h4>Variables & Arithmetic</h4>
+                        <p>Full support for variables and mathematical operations</p>
+                    </div>
+                    <div class="feature-card">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2L2 7L12 12L22 7L12 2Z"/>
+                            <path d="M2 17L12 22L22 17"/>
+                            <path d="M2 12L12 17L22 12"/>
+                        </svg>
+                        <h4>Control Flow</h4>
+                        <p>If/else statements, while loops, and for loops</p>
+                    </div>
+                    <div class="feature-card">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                            <line x1="9" y1="3" x2="9" y2="21"/>
+                        </svg>
+                        <h4>Object-Oriented</h4>
+                        <p>Classes, methods, and attributes for structured programming</p>
+                    </div>
+                    <div class="feature-card">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
+                            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+                        </svg>
+                        <h4>Arrays</h4>
+                        <p>Basic data structures with push and pop operations</p>
+                    </div>
+                    <div class="feature-card">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M12 6v6l4 2"/>
+                        </svg>
+                        <h4>Web Interface</h4>
+                        <p>Browser-based code editor and runner</p>
+                    </div>
+                    <div class="feature-card">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                            <polyline points="14 2 14 8 20 8"/>
+                        </svg>
+                        <h4>CLI Support</h4>
+                        <p>Run KnockScript files from the command line</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Project Structure -->
+            <section id="project-structure" class="docs-section">
+                <h2>Project Structure</h2>
+                <div class="code-block">
+                    <pre><code>knockscript/
+├── knockscript.rb      # Main CLI entry point
+├── lexer.rb           # Tokenizes KnockScript source code
+├── parser.rb          # Parses tokens into Abstract Syntax Tree
+├── interpreter.rb     # Executes the AST
+├── ast_nodes.rb       # AST node definitions
+├── token.rb           # Token class definition
+├── environment.rb     # Variable scope management
+├── examples/          # Example KnockScript programs
+│   ├── hello_world.ks
+│   └── classes.ks
+├── web/               # Web interface
+│   ├── app.rb         # Sinatra web server
+│   └── public/        # Static web assets
+├── config.ru          # Rack configuration
+└── Dockerfile         # Container configuration</code></pre>
+                </div>
+
+                <h3>Core Components</h3>
+                <ul class="feature-list">
+                    <li><strong>Lexer:</strong> Converts source code into tokens</li>
+                    <li><strong>Parser:</strong> Builds an Abstract Syntax Tree from tokens</li>
+                    <li><strong>Interpreter:</strong> Executes the AST and manages program state</li>
+                    <li><strong>Web Interface:</strong> Browser-based code editor and runner</li>
+                </ul>
+            </section>
+
+            <!-- Contributing -->
+            <section id="contributing" class="docs-section">
+                <h2>Contributing</h2>
+                <p>We welcome contributions to KnockScript! Whether it's bug fixes, new features, documentation improvements, or examples, your help is appreciated.</p>
+                
+                <h3>How to Contribute</h3>
+                <ol class="numbered-list">
+                    <li><strong>Fork the repository</strong> on GitHub</li>
+                    <li><strong>Clone your fork</strong> locally</li>
+                    <li><strong>Create a feature branch</strong></li>
+                    <li><strong>Make your changes</strong> following the code style guidelines</li>
+                    <li><strong>Test thoroughly</strong></li>
+                    <li><strong>Submit a pull request</strong></li>
+                </ol>
+
+                <div class="info-box">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                        <polyline points="14 2 14 8 20 8"/>
+                    </svg>
+                    <div>
+                        <strong>Full Guidelines:</strong> See <a href="https://github.com/darthvader58/knockscript/blob/main/CONTRIBUTING.md">CONTRIBUTING.md</a> for detailed contribution guidelines
+                    </div>
+                </div>
+
+                <h3>Types of Contributions</h3>
+                <ul class="feature-list">
+                    <li><strong>Bug Fixes:</strong> Fix issues in the lexer, parser, or interpreter</li>
+                    <li><strong>New Features:</strong> Add language constructs or improve existing ones</li>
+                    <li><strong>Documentation:</strong> Improve code comments, examples, or this guide</li>
+                    <li><strong>Web Interface:</strong> Enhance the online editor and user experience</li>
+                    <li><strong>Examples:</strong> Create new example programs showcasing language features</li>
+                    <li><strong>Testing:</strong> Add unit tests or integration tests</li>
+                </ul>
+            </section>
+
+            <!-- API Reference -->
+            <section id="api-reference" class="docs-section">
+                <h2>API Reference</h2>
+                
+                <h3>Commands</h3>
+                <div class="api-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Command</th>
+                                <th>Syntax</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>Set</code></td>
+                                <td><code>Set who? variable to value</code></td>
+                                <td>Assign a value to a variable</td>
+                            </tr>
+                            <tr>
+                                <td><code>Print</code></td>
+                                <td><code>Print who? expression</code></td>
+                                <td>Output a value to the console</td>
+                            </tr>
+                            <tr>
+                                <td><code>If</code></td>
+                                <td><code>If who? condition ... Done</code></td>
+                                <td>Conditional execution</td>
+                            </tr>
+                            <tr>
+                                <td><code>While</code></td>
+                                <td><code>While who? condition ... Done</code></td>
+                                <td>Repeat while condition is true</td>
+                            </tr>
+                            <tr>
+                                <td><code>For</code></td>
+                                <td><code>For who? var from start to end ... Done</code></td>
+                                <td>Loop with range</td>
+                            </tr>
+                            <tr>
+                                <td><code>Class</code></td>
+                                <td><code>Class who? Name with attr1 and attr2</code></td>
+                                <td>Define a class</td>
+                            </tr>
+                            <tr>
+                                <td><code>Method</code></td>
+                                <td><code>Method who? name for Class ... Done</code></td>
+                                <td>Define a method</td>
+                            </tr>
+                            <tr>
+                                <td><code>Call</code></td>
+                                <td><code>Call who? method on object</code></td>
+                                <td>Call a method</td>
+                            </tr>
+                            <tr>
+                                <td><code>Push</code></td>
+                                <td><code>Push who? value to array</code></td>
+                                <td>Add to array</td>
+                            </tr>
+                            <tr>
+                                <td><code>Pop</code></td>
+                                <td><code>Pop who? from array</code></td>
+                                <td>Remove from array</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3>Keywords</h3>
+                <div class="keyword-grid">
+                    <div class="keyword-card"><code>to</code></div>
+                    <div class="keyword-card"><code>from</code></div>
+                    <div class="keyword-card"><code>with</code></div>
+                    <div class="keyword-card"><code>and</code></div>
+                    <div class="keyword-card"><code>or</code></div>
+                    <div class="keyword-card"><code>not</code></div>
+                    <div class="keyword-card"><code>plus</code></div>
+                    <div class="keyword-card"><code>minus</code></div>
+                    <div class="keyword-card"><code>times</code></div>
+                    <div class="keyword-card"><code>divided by</code></div>
+                    <div class="keyword-card"><code>greater than</code></div>
+                    <div class="keyword-card"><code>less than</code></div>
+                    <div class="keyword-card"><code>equal to</code></div>
+                    <div class="keyword-card"><code>new</code></div>
+                    <div class="keyword-card"><code>list</code></div>
+                    <div class="keyword-card"><code>Otherwise</code></div>
+                    <div class="keyword-card"><code>Done</code></div>
+                </div>
+            </section>
+
+            <!-- Footer -->
+            <footer class="docs-footer">
+                <p>Made with &lt;3 by <a href="https://github.com/darthvader58" target="_blank">Shashwat Raj</a></p>
+                <p>Licensed under Apache 2.0 • <a href="https://github.com/darthvader58/knockscript">View on GitHub</a></p>
+            </footer>
+        </main>
+    </div>
+
+    <script src="docs.js"></script>
+</body>
+</html>
