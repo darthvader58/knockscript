@@ -290,7 +290,7 @@ body {
 }
 
 .editor-body {
-    height: 400px;
+    height: 250px;
 }
 
 .code-editor {
@@ -331,7 +331,7 @@ body {
 }
 
 .output-body {
-    height: 300px;
+    height: 250px;
     padding: 20px;
     font-family: 'Roboto Mono', 'Courier New', monospace;
     font-size: 13px;
