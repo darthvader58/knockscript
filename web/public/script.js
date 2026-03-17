@@ -99,6 +99,126 @@ Knock knock
 Who's there?
 Europe
 Europe who? greet on alice`
+,
+
+    functions: `# Reusable logic with parameters and return values
+Knock knock
+Who's there?
+Doozy
+Doozy who? addTax with amount and rate
+    Knock knock
+    Who's there?
+    Backatcha
+    Backatcha who? amount with extra amount on repeat rate
+Done
+
+Knock knock
+Who's there?
+Alby-Setin
+Alby-Setin who? total to Europe addTax with 80 and 0.1
+
+Knock knock
+Who's there?
+Lettuce
+Lettuce who? total`,
+
+    collections: `# Arrays and dictionaries in one place
+Knock knock
+Who's there?
+Alby-Setin
+Alby-Setin who? numbers to list with 3, 6, 9
+
+Knock knock
+Who's there?
+Sherwood
+Sherwood who? 12 to numbers
+
+Knock knock
+Who's there?
+Patcha
+Patcha who? 1 of numbers to 99
+
+Knock knock
+Who's there?
+Lettuce
+Lettuce who? Whichy 1 from numbers
+
+Knock knock
+Who's there?
+Alby-Setin
+Alby-Setin who? person to Oxford with name "Alice" and age 30
+
+Knock knock
+Who's there?
+Slotta
+Slotta who? city of person to "Phoenix"
+
+Knock knock
+Who's there?
+Lettuce
+Lettuce who? Keysy city from person
+
+Knock knock
+Who's there?
+Lettuce
+Lettuce who? Dosset Dave age in person`,
+
+    flow_control: `# Else-if chains, continue, and break
+Knock knock
+Who's there?
+Wanna
+Wanna who? i from 1 to 6
+    Knock knock
+    Who's there?
+    Anita
+    Anita who? i equal to 2
+        Knock knock
+        Who's there?
+        Carryon
+        Carryon who?
+    Anita also i equal to 5
+        Knock knock
+        Who's there?
+        Enough
+        Enough who?
+    Otherwise
+        Knock knock
+        Who's there?
+        Lettuce
+        Lettuce who? i
+    Done
+Done`,
+
+    input_and_errors: `# Input and try/catch
+Knock knock
+Who's there?
+Alby-Setin
+Alby-Setin who? name to Askem "What is your name?"
+
+Knock knock
+Who's there?
+Chance
+Chance who?
+    Knock knock
+    Who's there?
+    Lettuce
+    Lettuce who? "Hello, "
+
+    Knock knock
+    Who's there?
+    Lettuce
+    Lettuce who? name
+
+    Knock knock
+    Who's there?
+    Lettuce
+    Lettuce who? 10 split by 0
+Unlucky
+    Knock knock
+    Who's there?
+    Lettuce
+    Lettuce who? "That went sideways."
+Done`
 };
 
 // Sidebar navigation

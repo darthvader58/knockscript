@@ -132,24 +132,40 @@ Lettuce who? "Hello, World!"</textarea>
             <div id="examplesView" class="view">
                 <div class="page-header">
                     <h1>Examples</h1>
-                    <p class="page-description">Learn KnockScript with ready-to-run examples</p>
+                    <p class="page-description">Learn KnockScript with focused, runnable examples that show the shape of the language.</p>
                 </div>
                 <div class="examples-grid">
                     <div class="example-card" data-example="hello_world">
                         <h3>Hello World</h3>
-                        <p>Your first KnockScript program</p>
+                        <p>The smallest valid KnockScript program.</p>
                     </div>
                     <div class="example-card" data-example="arithmetic">
                         <h3>Arithmetic Operations</h3>
-                        <p>Variables and mathematical operations</p>
+                        <p>Assignment, arithmetic phrases, and printed results.</p>
                     </div>
                     <div class="example-card" data-example="loops">
                         <h3>Loops & Conditionals</h3>
-                        <p>Control flow with while loops</p>
+                        <p>Assignment, looping, and condition checks working together.</p>
                     </div>
                     <div class="example-card" data-example="classes">
                         <h3>Object-Oriented Programming</h3>
-                        <p>Classes, methods, and objects</p>
+                        <p>Classes, methods, instances, and attribute updates.</p>
+                    </div>
+                    <div class="example-card" data-example="functions">
+                        <h3>Functions & Return</h3>
+                        <p>Reusable logic with parameters and <code>Backatcha</code>.</p>
+                    </div>
+                    <div class="example-card" data-example="collections">
+                        <h3>Arrays & Dictionaries</h3>
+                        <p><code>list with</code>, <code>Oxford</code>, and collection helpers.</p>
+                    </div>
+                    <div class="example-card" data-example="flow_control">
+                        <h3>Break & Continue</h3>
+                        <p><code>Anita also</code>, <code>Enough</code>, and <code>Carryon</code>.</p>
+                    </div>
+                    <div class="example-card" data-example="input_and_errors">
+                        <h3>Input & Error Handling</h3>
+                        <p><code>Askem</code> plus <code>Chance</code> / <code>Unlucky</code>.</p>
                     </div>
                 </div>
             </div>
@@ -158,9 +174,31 @@ Lettuce who? "Hello, World!"</textarea>
             <div id="referenceView" class="view">
                 <div class="page-header">
                     <h1>Quick Reference</h1>
-                    <p class="page-description">Language syntax and features</p>
+                    <p class="page-description">A compact guide to the structure, joke names, and core features of KnockScript v2.</p>
                 </div>
                 <div class="reference-grid">
+                    <div class="reference-card">
+                        <h3>How Every Statement Works</h3>
+                        <pre>Knock knock
+Who's there?
+[Command]
+[Command] who? [payload]</pre>
+                    </div>
+                    <div class="reference-card">
+                        <h3>The Full Joke</h3>
+                        <pre>Knock knock.
+Who's there?
+Lettuce.
+Lettuce who?
+Lettuce write some code.</pre>
+                    </div>
+                    <div class="reference-card">
+                        <h3>Output</h3>
+                        <pre>Knock knock
+Who's there?
+Lettuce
+Lettuce who? "Hello!"</pre>
+                    </div>
                     <div class="reference-card">
                         <h3>Variables</h3>
                         <pre>Knock knock
@@ -169,11 +207,19 @@ Alby-Setin
 Alby-Setin who? x to 10</pre>
                     </div>
                     <div class="reference-card">
-                        <h3>Print Output</h3>
-                        <pre>Knock knock
-Who's there?
-Lettuce
-Lettuce who? "Hello!"</pre>
+                        <h3>Arithmetic</h3>
+                        <pre>with extra  -> +
+without     -> -
+on repeat   -> *
+split by    -> /</pre>
+                    </div>
+                    <div class="reference-card">
+                        <h3>Comparisons</h3>
+                        <pre>greater than
+less than
+equal to
+not equal to
+Nope [expression]</pre>
                     </div>
                     <div class="reference-card">
                         <h3>Conditionals</h3>
@@ -181,6 +227,8 @@ Lettuce who? "Hello!"</pre>
 Who's there?
 Anita
 Anita who? x greater than 5
+    [statements]
+Anita also x equal to 5
     [statements]
 Otherwise
     [statements]
@@ -205,6 +253,11 @@ Wanna who? i from 1 to 5
 Done</pre>
                     </div>
                     <div class="reference-card">
+                        <h3>Loop Control</h3>
+                        <pre>Enough   -> break
+Carryon  -> continue</pre>
+                    </div>
+                    <div class="reference-card">
                         <h3>Classes & Objects</h3>
                         <pre>Knock knock
 Who's there?
@@ -213,9 +266,70 @@ Kit who? Person with name and age
 
 Knock knock
 Who's there?
+Dewey
+Dewey who? greet for Person
+    [statements]
+Done
+
+Knock knock
+Who's there?
 Alby-Setin
 Alby-Setin who? p to Fresh Person 
 with name "Alice" and age 30</pre>
+                    </div>
+                    <div class="reference-card">
+                        <h3>Method Calls & Attributes</h3>
+                        <pre>Europe who? greet on person
+Justin who? age from person
+Alby-Setin who? age of person to 31</pre>
+                    </div>
+                    <div class="reference-card">
+                        <h3>Functions</h3>
+                        <pre>Knock knock
+Who's there?
+Doozy
+Doozy who? add with left and right
+    Knock knock
+    Who's there?
+    Backatcha
+    Backatcha who? left with extra right
+Done</pre>
+                    </div>
+                    <div class="reference-card">
+                        <h3>Arrays</h3>
+                        <pre>list with 1, 2, 3
+Sherwood who? 4 to nums
+Iva who? from nums
+Patcha who? 0 of nums to 99
+Howie nums
+Whichy 1 from nums
+Dosset Dave 99 in nums</pre>
+                    </div>
+                    <div class="reference-card">
+                        <h3>Dictionaries</h3>
+                        <pre>Oxford with name "Alice" and age 30
+Keysy name from person
+Slotta who? city of person to "Phoenix"
+Dosset Dave age in person
+Skipper who? age from person</pre>
+                    </div>
+                    <div class="reference-card">
+                        <h3>Input & Errors</h3>
+                        <pre>Askem "What is your name?"
+
+Chance who?
+    [statements]
+Unlucky
+    [statements]
+Done</pre>
+                    </div>
+                    <div class="reference-card">
+                        <h3>Booleans & Comments</h3>
+                        <pre>true
+false
+Nope true
+
+# This is a comment</pre>
                     </div>
                 </div>
             </div>

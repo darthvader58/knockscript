@@ -117,7 +117,7 @@ get '/examples' do
     examples_dir = File.expand_path('../examples', File.dirname(__FILE__))
     examples = {}
     
-    %w[hello_world classes].each do |name|
+    %w[hello_world classes functions collections flow_control input_and_errors v2_features].each do |name|
       path = File.join(examples_dir, "#{name}.ks")
       examples[name.to_sym] = File.read(path) if File.exist?(path)
     end
