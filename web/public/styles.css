@@ -167,6 +167,7 @@ body {
     padding: 32px;
     max-width: 1400px;
     margin: 0 auto;
+    box-sizing: border-box;
 }
 
 .view.active {
@@ -504,7 +505,7 @@ body {
     .view {
         padding: 16px;
     }
-    
+
     .page-header h1 {
         font-size: 24px;
     }
