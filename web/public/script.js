@@ -56,8 +56,18 @@ Antil
 Antil who? counter less than 6
     Knock knock
     Who's there?
-    Lettuce
-    Lettuce who? counter
+    Anita
+    Anita who? counter equal to 3
+        Knock knock
+        Who's there?
+        Lettuce
+        Lettuce who? "middle"
+    Otherwise
+        Knock knock
+        Who's there?
+        Lettuce
+        Lettuce who? counter
+    Done
     
     Knock knock
     Who's there?
