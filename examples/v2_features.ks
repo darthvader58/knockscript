@@ -32,3 +32,23 @@ Knock knock
 Who's there?
 Lettuce
 Lettuce who? Europe add with 8 and 5
+
+Knock knock
+Who's there?
+Alby-Setin
+Alby-Setin who? person to Oxford with name "Alice" and age 30
+
+Knock knock
+Who's there?
+Lettuce
+Lettuce who? Keysy age from person
+
+Knock knock
+Who's there?
+Slotta
+Slotta who? age of person to 31
+
+Knock knock
+Who's there?
+Lettuce
+Lettuce who? Dosset Dave age in person

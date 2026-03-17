@@ -141,12 +141,32 @@ Lettuce
 Lettuce who? Europe add with 2 and 3
 ```
 
+### Dictionaries
+
+```knockscript
+Knock knock
+Who's there?
+Alby-Setin
+Alby-Setin who? person to Oxford with name "Alice" and age 30
+
+Knock knock
+Who's there?
+Lettuce
+Lettuce who? Keysy name from person
+
+Knock knock
+Who's there?
+Slotta
+Slotta who? age of person to 31
+```
+
 ## Features
 
 - Variables, arithmetic, and comparisons
 - Control flow (`Anita`, `Antil`, `Wanna`, `Anita also`, `Chance` / `Unlucky`)
 - Object-oriented programming (`Kit`, `Dewey`, `Europe`, attributes)
 - Arrays and basic data-structure helpers (`Howie`, `Whichy`, `Patcha`, `Dosset Dave`, `Skipper`)
+- Dictionaries via `Oxford`, `Keysy`, and `Slotta`
 - Standalone functions and return values
 - Input plus loop control (`Askem`, `Enough`, `Carryon`)
 - Web-based code editor and runner
