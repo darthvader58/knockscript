@@ -119,11 +119,23 @@ class Interpreter
       raise "Array index must be numeric" unless index.is_a?(Numeric)
 
       array[index.to_i] = evaluate_expression(node.value, env)
+    when DictionarySetStatement
+      dictionary = get_dictionary(env, node.dictionary)
+      key = evaluate_expression(node.key, env)
+      dictionary[key.to_s] = evaluate_expression(node.value, env)
     when RemoveValueStatement
-      array = get_array(env, node.array)
       value = evaluate_expression(node.value, env)
-      remove_index = array.index(value)
-      array.delete_at(remove_index) if remove_index
+      collection = env.get(node.array)
+
+      case collection
+      when Array
+        remove_index = collection.index(value)
+        collection.delete_at(remove_index) if remove_index
+      when Hash
+        collection.delete(value.to_s)
+      else
+        raise "#{node.array} is not a removable collection"
+      end
     when ReturnStatement
       raise ReturnSignal.new(evaluate_expression(node.expression, env))
     when BreakStatement
@@ -186,6 +198,8 @@ class Interpreter
       get_object(env, node.object).get_attribute(node.attribute)
     when ArrayLiteral
       node.elements.map { |element| evaluate_expression(element, env) }
+    when DictionaryLiteral
+      node.entries.transform_values { |value| evaluate_expression(value, env) }
     when LengthExpression
       evaluate_expression(node.array, env).length
     when IndexExpression
@@ -195,11 +209,23 @@ class Interpreter
       raise "Array index must be numeric" unless index.is_a?(Numeric)
 
       array[index.to_i]
-    when IncludesExpression
-      array = evaluate_expression(node.array, env)
-      raise "Can only search arrays" unless array.is_a?(Array)
+    when DictionaryGetExpression
+      dictionary = evaluate_expression(node.dictionary, env)
+      raise "Can only lookup keys on dictionaries" unless dictionary.is_a?(Hash)
 
-      array.include?(evaluate_expression(node.value, env))
+      dictionary[evaluate_expression(node.key, env).to_s]
+    when IncludesExpression
+      collection = evaluate_expression(node.array, env)
+      lookup = evaluate_expression(node.value, env)
+
+      case collection
+      when Array
+        collection.include?(lookup)
+      when Hash
+        collection.key?(lookup.to_s)
+      else
+        raise "Can only search arrays or dictionaries"
+      end
     when InputExpression
       prompt = format_output(evaluate_expression(node.prompt, env))
       @input_provider.call(prompt)
@@ -262,6 +288,13 @@ class Interpreter
     array
   end
 
+  def get_dictionary(env, name)
+    dictionary = env.get(name)
+    raise "#{name} is not a dictionary" unless dictionary.is_a?(Hash)
+
+    dictionary
+  end
+
   def truthy?(value)
     value != false && !value.nil?
   end
@@ -272,6 +305,8 @@ class Interpreter
       value
     when Array
       "[#{value.map { |element| format_output(element) }.join(', ')}]"
+    when Hash
+      "{#{value.map { |key, element| "#{key}: #{format_output(element)}" }.join(', ')}}"
     when KnockObject
       value.to_s
     when NilClass
