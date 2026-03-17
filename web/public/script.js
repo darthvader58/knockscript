@@ -17,88 +17,88 @@ const sidebarItems = document.querySelectorAll('.sidebar-item');
 const examples = {
     hello_world: `Knock knock
 Who's there?
-Print
-Print who? "Hello, World!"`,
+Lettuce
+Lettuce who? "Hello, World!"`,
     
     arithmetic: `Knock knock
 Who's there?
-Set
-Set who? x to 10
+Alby-Setin
+Alby-Setin who? x to 10
 
 Knock knock
 Who's there?
-Set
-Set who? y to 5
+Alby-Setin
+Alby-Setin who? y to 5
 
 Knock knock
 Who's there?
-Set
-Set who? result to x plus y times 2
+Alby-Setin
+Alby-Setin who? result to x with extra y on repeat 2
 
 Knock knock
 Who's there?
-Print
-Print who? "Result: "
+Lettuce
+Lettuce who? "Result: "
 
 Knock knock
 Who's there?
-Print
-Print who? result`,
+Lettuce
+Lettuce who? result`,
     
     loops: `Knock knock
 Who's there?
-Set
-Set who? counter to 1
+Alby-Setin
+Alby-Setin who? counter to 1
 
 Knock knock
 Who's there?
-While
-While who? counter less than 6
+Antil
+Antil who? counter less than 6
     Knock knock
     Who's there?
-    Print
-    Print who? counter
+    Lettuce
+    Lettuce who? counter
     
     Knock knock
     Who's there?
-    Set
-    Set who? counter to counter plus 1
+    Alby-Setin
+    Alby-Setin who? counter to counter with extra 1
 Done
 
 Knock knock
 Who's there?
-Print
-Print who? "Done!"`,
+Lettuce
+Lettuce who? "Done!"`,
     
     classes: `Knock knock
 Who's there?
-Class
-Class who? Person with name and age
+Kit
+Kit who? Person with name and age
 
 Knock knock
 Who's there?
-Method
-Method who? greet for Person
+Dewey
+Dewey who? greet for Person
     Knock knock
     Who's there?
-    Print
-    Print who? "Hello, I'm "
+    Lettuce
+    Lettuce who? "Hello, I'm "
     
     Knock knock
     Who's there?
-    Print
-    Print who? name
+    Lettuce
+    Lettuce who? name
 Done
 
 Knock knock
 Who's there?
-Set
-Set who? alice to new Person with name "Alice" and age 30
+Alby-Setin
+Alby-Setin who? alice to Fresh Person with name "Alice" and age 30
 
 Knock knock
 Who's there?
-Call
-Call who? greet on alice`
+Europe
+Europe who? greet on alice`
 };
 
 // Sidebar navigation
