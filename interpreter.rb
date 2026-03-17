@@ -121,18 +121,17 @@ class Interpreter
       array[index.to_i] = evaluate_expression(node.value, env)
     when DictionarySetStatement
       dictionary = get_dictionary(env, node.dictionary)
-      key = evaluate_expression(node.key, env)
-      dictionary[key.to_s] = evaluate_expression(node.value, env)
+      dictionary[evaluate_key_like(node.key, env).to_s] = evaluate_expression(node.value, env)
     when RemoveValueStatement
-      value = evaluate_expression(node.value, env)
       collection = env.get(node.array)
 
       case collection
       when Array
+        value = evaluate_expression(node.value, env)
         remove_index = collection.index(value)
         collection.delete_at(remove_index) if remove_index
       when Hash
-        collection.delete(value.to_s)
+        collection.delete(evaluate_key_like(node.value, env).to_s)
       else
         raise "#{node.array} is not a removable collection"
       end
@@ -213,16 +212,15 @@ class Interpreter
       dictionary = evaluate_expression(node.dictionary, env)
       raise "Can only lookup keys on dictionaries" unless dictionary.is_a?(Hash)
 
-      dictionary[evaluate_expression(node.key, env).to_s]
+      dictionary[evaluate_key_like(node.key, env).to_s]
     when IncludesExpression
       collection = evaluate_expression(node.array, env)
-      lookup = evaluate_expression(node.value, env)
 
       case collection
       when Array
-        collection.include?(lookup)
+        collection.include?(evaluate_expression(node.value, env))
       when Hash
-        collection.key?(lookup.to_s)
+        collection.key?(evaluate_key_like(node.value, env).to_s)
       else
         raise "Can only search arrays or dictionaries"
       end
@@ -297,6 +295,12 @@ class Interpreter
 
   def truthy?(value)
     value != false && !value.nil?
+  end
+
+  def evaluate_key_like(node, env)
+    return node.name if node.is_a?(Variable) && !env.defined?(node.name)
+
+    evaluate_expression(node, env)
   end
 
   def format_output(value)

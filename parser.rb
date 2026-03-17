@@ -211,6 +211,17 @@ class Parser
     expressions
   end
 
+  def parse_key_operand
+    case current_token.type
+    when :identifier
+      Literal.new(expect(:identifier).value)
+    when :string, :number, :boolean
+      parse_factor
+    else
+      parse_expression
+    end
+  end
+
   def parse_set_statement
     variable_name = expect(:identifier).value
 
@@ -357,7 +368,7 @@ class Parser
   end
 
   def parse_set_dictionary_key_statement
-    key = parse_expression
+    key = parse_key_operand
     expect_keyword('of')
     dictionary_name = expect(:identifier).value
     expect_keyword('to')
