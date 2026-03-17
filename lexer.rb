@@ -2,11 +2,11 @@ require_relative 'token'
 
 class Lexer
   KEYWORDS = %w[
-    to from with and or not for
+    to from with and or not for in
     plus minus times divided by
     greater than less equal
     true false list new of on
-    Otherwise Done
+    Otherwise Done Unlucky also
   ].freeze
   
   def initialize(source)
@@ -162,17 +162,17 @@ class Lexer
   def tokenize_identifier
     start = @position
     
-    while peek && peek =~ /[a-zA-Z0-9_]/
+    while peek && peek =~ /[a-zA-Z0-9_-]/
       advance
     end
     
     value = @source[start...@position]
     
     # keyword check
-    if KEYWORDS.include?(value)
-      @tokens << Token.new(:keyword, value, @line)
-    elsif value == 'true' || value == 'false'
+    if value == 'true' || value == 'false'
       @tokens << Token.new(:boolean, value == 'true', @line)
+    elsif KEYWORDS.include?(value)
+      @tokens << Token.new(:keyword, value, @line)
     else
       skip_whitespace_except_newline
       if match_pattern(/\Awho\?/i)

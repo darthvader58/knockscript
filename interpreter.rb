@@ -1,206 +1,283 @@
 require_relative 'environment'
 require_relative 'ast_nodes'
 
+class ReturnSignal < StandardError
+  attr_reader :value
+
+  def initialize(value)
+    super()
+    @value = value
+  end
+end
+
+class BreakSignal < StandardError; end
+class ContinueSignal < StandardError; end
+
 class Interpreter
-  def initialize
+  def initialize(input_provider = nil)
     @global_env = Environment.new
     @classes = {}
+    @functions = {}
     @output = []
+    @input_provider = input_provider || method(:default_input)
   end
-  
+
   def execute(program_node)
     @output = []
-    
+
     begin
-      program_node.statements.each do |statement|
-        execute_statement(statement, @global_env)
-      end
+      execute_block(program_node.statements, @global_env)
       { success: true, output: @output.join("\n") }
     rescue => e
       { success: false, error: e.message }
     end
   end
-  
+
   private
-  
+
+  def execute_block(statements, env)
+    statements.each do |statement|
+      execute_statement(statement, env)
+    end
+  end
+
   def execute_statement(node, env)
     case node
     when SetStatement
-      value = evaluate_expression(node.value, env)
-      env.set(node.variable, value)
-      
+      env.set(node.variable, evaluate_expression(node.value, env))
     when PrintStatement
-      value = evaluate_expression(node.expression, env)
-      @output << format_output(value)
-      
+      @output << format_output(evaluate_expression(node.expression, env))
     when IfStatement
-      condition_result = evaluate_expression(node.condition, env)
-      if truthy?(condition_result)
-        node.if_body.each { |stmt| execute_statement(stmt, env) }
+      if truthy?(evaluate_expression(node.condition, env))
+        execute_block(node.if_body, env)
       else
-        node.else_body.each { |stmt| execute_statement(stmt, env) }
+        branch = node.elsif_branches.find { |condition, _| truthy?(evaluate_expression(condition, env)) }
+        if branch
+          execute_block(branch[1], env)
+        else
+          execute_block(node.else_body, env)
+        end
       end
-      
     when WhileStatement
       while truthy?(evaluate_expression(node.condition, env))
-        node.body.each { |stmt| execute_statement(stmt, env) }
+        begin
+          execute_block(node.body, env)
+        rescue ContinueSignal
+          next
+        rescue BreakSignal
+          break
+        end
       end
-      
     when ForStatement
       start_val = evaluate_expression(node.start_value, env)
       end_val = evaluate_expression(node.end_value, env)
-      
       raise "For loop requires numeric range" unless start_val.is_a?(Numeric) && end_val.is_a?(Numeric)
-      
+
       (start_val..end_val).each do |i|
-        local_env = Environment.new(env)
-        local_env.set(node.variable, i)
-        node.body.each { |stmt| execute_statement(stmt, local_env) }
-      end
-      
-    when ClassDefinition
-      knock_class = KnockClass.new(node.name, node.attributes)
-      @classes[node.name] = knock_class
-      
-    when MethodDefinition
-      unless @classes.key?(node.class_name)
-        raise "Class #{node.class_name} not defined"
-      end
-      @classes[node.class_name].add_method(node.name, node)
-      
-    when MethodCall
-      object = env.get(node.object)
-      raise "#{node.object} is not an object" unless object.is_a?(KnockObject)
-      
-      method_def = object.class_def.methods[node.method_name]
-      raise "Method #{node.method_name} not defined for class #{object.class_def.name}" unless method_def
-      
-      # Create method environment with access to instance attributes
-      method_env = Environment.new(env)
-      object.attributes.each do |attr_name, attr_value|
-        method_env.set(attr_name, attr_value)
-      end
-      
-      method_def.body.each { |stmt| execute_statement(stmt, method_env) }
-      
-      # Update object attributes from method environment
-      object.attributes.each_key do |attr_name|
-        if method_env.defined?(attr_name)
-          object.attributes[attr_name] = method_env.get(attr_name)
+        loop_env = Environment.new(env)
+        loop_env.set(node.variable, i)
+
+        begin
+          execute_block(node.body, loop_env)
+        rescue ContinueSignal
+          next
+        rescue BreakSignal
+          break
         end
       end
-      
+    when ClassDefinition
+      @classes[node.name] = KnockClass.new(node.name, node.attributes)
+    when MethodDefinition
+      raise "Class #{node.class_name} not defined" unless @classes.key?(node.class_name)
+
+      @classes[node.class_name].add_method(node.name, node)
+    when FunctionDefinition
+      @functions[node.name] = node
+    when CallExpression
+      evaluate_call(node, env)
     when GetAttribute
-      object = env.get(node.object)
-      raise "#{node.object} is not an object" unless object.is_a?(KnockObject)
-      object.get_attribute(node.attribute)
-      
+      get_object(env, node.object).get_attribute(node.attribute)
     when SetAttribute
-      object = env.get(node.object)
-      raise "#{node.object} is not an object" unless object.is_a?(KnockObject)
-      value = evaluate_expression(node.value, env)
-      object.set_attribute(node.attribute, value)
-      
+      get_object(env, node.object).set_attribute(node.attribute, evaluate_expression(node.value, env))
     when PushStatement
-      array = env.get(node.array)
-      raise "#{node.array} is not an array" unless array.is_a?(Array)
-      value = evaluate_expression(node.value, env)
-      array.push(value)
-      
+      get_array(env, node.array) << evaluate_expression(node.value, env)
     when PopStatement
-      array = env.get(node.array)
-      raise "#{node.array} is not an array" unless array.is_a?(Array)
-      array.pop
-      
+      get_array(env, node.array).pop
+    when SetIndexStatement
+      array = get_array(env, node.array)
+      index = evaluate_expression(node.index, env)
+      raise "Array index must be numeric" unless index.is_a?(Numeric)
+
+      array[index.to_i] = evaluate_expression(node.value, env)
+    when RemoveValueStatement
+      array = get_array(env, node.array)
+      value = evaluate_expression(node.value, env)
+      remove_index = array.index(value)
+      array.delete_at(remove_index) if remove_index
+    when ReturnStatement
+      raise ReturnSignal.new(evaluate_expression(node.expression, env))
+    when BreakStatement
+      raise BreakSignal
+    when ContinueStatement
+      raise ContinueSignal
+    when TryCatchStatement
+      begin
+        execute_block(node.try_body, env)
+      rescue ReturnSignal, BreakSignal, ContinueSignal
+        raise
+      rescue => _e
+        execute_block(node.catch_body, env)
+      end
     else
       raise "Unknown statement type: #{node.class}"
     end
   end
-  
+
   def evaluate_expression(node, env)
     case node
     when Literal
       node.value
-      
     when Variable
       env.get(node.name)
-      
     when BinaryOperation
       left = evaluate_expression(node.left, env)
       right = evaluate_expression(node.right, env)
-      
+
       case node.operator
-      when '+'
-        left + right
-      when '-'
-        left - right
-      when '*'
-        left * right
+      when '+' then left + right
+      when '-' then left - right
+      when '*' then left * right
       when '/'
         raise "Division by zero" if right == 0
+
         left / right
-      when '>'
-        left > right
-      when '<'
-        left < right
-      when '=='
-        left == right
-      when '!='
-        left != right
+      when '>' then left > right
+      when '<' then left < right
+      when '==' then left == right
+      when '!=' then left != right
       else
         raise "Unknown operator: #{node.operator}"
       end
-      
     when UnaryOperation
       operand = evaluate_expression(node.operand, env)
-      
       case node.operator
-      when 'not'
-        !truthy?(operand)
+      when 'not' then !truthy?(operand)
       else
         raise "Unknown unary operator: #{node.operator}"
       end
-      
     when NewInstance
-      unless @classes.key?(node.class_name)
-        raise "Class #{node.class_name} not defined"
-      end
-      
-      # Evaluate all argument expressions
-      evaluated_args = {}
-      node.arguments.each do |attr_name, attr_expr|
-        evaluated_args[attr_name] = evaluate_expression(attr_expr, env)
-      end
-      
-      @classes[node.class_name].instantiate(evaluated_args)
-      
+      raise "Class #{node.class_name} not defined" unless @classes.key?(node.class_name)
+
+      args = node.arguments.transform_values { |expr| evaluate_expression(expr, env) }
+      @classes[node.class_name].instantiate(args)
+    when CallExpression
+      evaluate_call(node, env)
     when GetAttribute
-      object = env.get(node.object)
-      raise "#{node.object} is not an object" unless object.is_a?(KnockObject)
-      object.get_attribute(node.attribute)
-      
+      get_object(env, node.object).get_attribute(node.attribute)
     when ArrayLiteral
-      node.elements.map { |elem| evaluate_expression(elem, env) }
-      
+      node.elements.map { |element| evaluate_expression(element, env) }
+    when LengthExpression
+      evaluate_expression(node.array, env).length
+    when IndexExpression
+      array = evaluate_expression(node.array, env)
+      index = evaluate_expression(node.index, env)
+      raise "Can only index arrays" unless array.is_a?(Array)
+      raise "Array index must be numeric" unless index.is_a?(Numeric)
+
+      array[index.to_i]
+    when IncludesExpression
+      array = evaluate_expression(node.array, env)
+      raise "Can only search arrays" unless array.is_a?(Array)
+
+      array.include?(evaluate_expression(node.value, env))
+    when InputExpression
+      prompt = format_output(evaluate_expression(node.prompt, env))
+      @input_provider.call(prompt)
     else
       raise "Unknown expression type: #{node.class}"
     end
   end
-  
-  def truthy?(value)
-    value != false && value != nil
+
+  def evaluate_call(node, env)
+    if node.object
+      object = get_object(env, node.object)
+      method_def = object.class_def.methods[node.name]
+      raise "Method #{node.name} not defined for class #{object.class_def.name}" unless method_def
+
+      method_env = Environment.new(env)
+      object.attributes.each { |attr_name, attr_value| method_env.set(attr_name, attr_value) }
+      bind_parameters(method_env, method_def.parameters, node.arguments, env)
+
+      value = execute_callable(method_def.body, method_env)
+      object.attributes.each_key do |attr_name|
+        object.attributes[attr_name] = method_env.get(attr_name) if method_env.defined?(attr_name)
+      end
+      value
+    else
+      function_def = @functions[node.name]
+      raise "Function #{node.name} not defined" unless function_def
+
+      function_env = Environment.new(env)
+      bind_parameters(function_env, function_def.parameters, node.arguments, env)
+      execute_callable(function_def.body, function_env)
+    end
   end
-  
+
+  def bind_parameters(call_env, parameters, arguments, caller_env)
+    raise "Expected #{parameters.length} arguments, got #{arguments.length}" unless parameters.length == arguments.length
+
+    parameters.zip(arguments).each do |parameter, argument|
+      call_env.set(parameter, evaluate_expression(argument, caller_env))
+    end
+  end
+
+  def execute_callable(body, env)
+    execute_block(body, env)
+    nil
+  rescue ReturnSignal => signal
+    signal.value
+  end
+
+  def get_object(env, name)
+    object = env.get(name)
+    raise "#{name} is not an object" unless object.is_a?(KnockObject)
+
+    object
+  end
+
+  def get_array(env, name)
+    array = env.get(name)
+    raise "#{name} is not an array" unless array.is_a?(Array)
+
+    array
+  end
+
+  def truthy?(value)
+    value != false && !value.nil?
+  end
+
   def format_output(value)
     case value
     when String
       value
     when Array
-      "[#{value.map { |v| format_output(v) }.join(', ')}]"
+      "[#{value.map { |element| format_output(element) }.join(', ')}]"
     when KnockObject
       value.to_s
+    when NilClass
+      'nil'
     else
       value.to_s
+    end
+  end
+
+  def default_input(prompt)
+    if $stdin.tty?
+      print(prompt.empty? ? '' : "#{prompt} ")
+      $stdout.flush
+      ($stdin.gets || '').chomp
+    else
+      ''
     end
   end
 end
