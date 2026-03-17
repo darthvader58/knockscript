@@ -12,6 +12,14 @@ end
 
 class BreakSignal < StandardError; end
 class ContinueSignal < StandardError; end
+class InputRequest < StandardError
+  attr_reader :prompt
+
+  def initialize(prompt)
+    super()
+    @prompt = prompt
+  end
+end
 
 class Interpreter
   def initialize(input_provider = nil)
@@ -28,6 +36,8 @@ class Interpreter
     begin
       execute_block(program_node.statements, @global_env)
       { success: true, output: @output.join("\n") }
+    rescue InputRequest => e
+      { success: false, needs_input: true, prompt: e.prompt, output: @output.join("\n") }
     rescue => e
       { success: false, error: e.message }
     end
@@ -277,7 +287,7 @@ class Interpreter
       $stdout.flush
       ($stdin.gets || '').chomp
     else
-      ''
+      raise InputRequest.new(prompt)
     end
   end
 end
