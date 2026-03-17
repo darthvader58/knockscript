@@ -172,15 +172,7 @@ runBtn.addEventListener('click', async () => {
     runBtn.innerHTML = '<span class="loading"></span> Running...';
     
     try {
-        const response = await fetch('/compile', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ code })
-        });
-        
-        const result = await response.json();
+        const result = await runCodeWithInput(code);
         
         if (result.success) {
             showOutput(result.output || '(No output)', true);
@@ -199,6 +191,36 @@ runBtn.addEventListener('click', async () => {
         `;
     }
 });
+
+async function runCodeWithInput(code) {
+    const inputs = [];
+    
+    while (true) {
+        const response = await fetch('/compile', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ code, inputs })
+        });
+        
+        const result = await response.json();
+        
+        if (!result.needs_input) {
+            return result;
+        }
+        
+        const answer = window.prompt(result.prompt || 'Input:', '');
+        if (answer === null) {
+            return {
+                success: false,
+                error: 'Input cancelled by user.'
+            };
+        }
+        
+        inputs.push(answer);
+    }
+}
 
 // Clear Editor
 clearBtn.addEventListener('click', () => {
