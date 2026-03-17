@@ -217,6 +217,15 @@ class ArrayLiteral < ASTNode
   end
 end
 
+class DictionaryLiteral < ASTNode
+  attr_accessor :entries
+
+  def initialize(entries)
+    super()
+    @entries = entries
+  end
+end
+
 class PushStatement < ASTNode
   attr_accessor :value, :array
 
@@ -247,6 +256,17 @@ class SetIndexStatement < ASTNode
   end
 end
 
+class DictionarySetStatement < ASTNode
+  attr_accessor :key, :dictionary, :value
+
+  def initialize(key, dictionary, value)
+    super()
+    @key = key
+    @dictionary = dictionary
+    @value = value
+  end
+end
+
 class RemoveValueStatement < ASTNode
   attr_accessor :value, :array
 
@@ -273,6 +293,16 @@ class IndexExpression < ASTNode
     super()
     @index = index
     @array = array
+  end
+end
+
+class DictionaryGetExpression < ASTNode
+  attr_accessor :key, :dictionary
+
+  def initialize(key, dictionary)
+    super()
+    @key = key
+    @dictionary = dictionary
   end
 end
 

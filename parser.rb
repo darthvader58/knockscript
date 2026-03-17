@@ -26,6 +26,7 @@ class Parser
     'pop' => 'pop',
     'iva' => 'pop',
     'patcha' => 'set_index',
+    'slotta' => 'set_dictionary_key',
     'skipper' => 'remove_value',
     'function' => 'function',
     'doozy' => 'function',
@@ -164,6 +165,7 @@ class Parser
     when 'push' then parse_push_statement
     when 'pop' then parse_pop_statement
     when 'set_index' then parse_set_index_statement
+    when 'set_dictionary_key' then parse_set_dictionary_key_statement
     when 'remove_value' then parse_remove_value_statement
     when 'function' then parse_function_definition
     when 'return' then parse_return_statement
@@ -354,6 +356,14 @@ class Parser
     SetIndexStatement.new(index, array_name, parse_expression)
   end
 
+  def parse_set_dictionary_key_statement
+    key = parse_expression
+    expect_keyword('of')
+    dictionary_name = expect(:identifier).value
+    expect_keyword('to')
+    DictionarySetStatement.new(key, dictionary_name, parse_expression)
+  end
+
   def parse_remove_value_statement
     value = parse_expression
     expect_keyword('from')
@@ -490,6 +500,11 @@ class Parser
       index = parse_expression
       expect_keyword('from')
       IndexExpression.new(index, parse_factor)
+    when 'keysy'
+      advance
+      key = parse_expression
+      expect_keyword('from')
+      DictionaryGetExpression.new(key, parse_factor)
     when 'dosset'
       advance
       second_word = expect(:identifier).value
@@ -500,6 +515,9 @@ class Parser
     when 'askem'
       advance
       InputExpression.new(current_token.type == :newline ? Literal.new('') : parse_expression)
+    when 'oxford'
+      advance
+      parse_dictionary_literal
     when 'fresh'
       parse_new_instance
     else
@@ -562,5 +580,21 @@ class Parser
     end
 
     ArrayLiteral.new(elements)
+  end
+
+  def parse_dictionary_literal
+    expect_keyword('with')
+
+    entries = {}
+    key = expect(:identifier).value
+    entries[key] = parse_expression
+
+    while token_matches?(current_token, 'and')
+      advance
+      key = expect(:identifier).value
+      entries[key] = parse_expression
+    end
+
+    DictionaryLiteral.new(entries)
   end
 end
