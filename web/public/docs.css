@@ -147,7 +147,7 @@
 
 /* Code Blocks */
 .code-block {
-    background: var(--code-bg);
+    background: var(--surface-elevated);
     border: 1px solid var(--border);
     border-radius: 8px;
     overflow: hidden;
@@ -216,29 +216,29 @@
     display: flex;
     gap: 12px;
     padding: 16px;
-    background: #e8f4fd;
-    border-left: 4px solid #1967d2;
+    background: var(--info-bg);
+    border-left: 4px solid var(--info-accent);
     border-radius: 4px;
     margin: 24px 0;
 }
 
 .info-box svg {
     flex-shrink: 0;
-    color: #1967d2;
+    color: var(--info-accent);
 }
 
 .info-box strong {
-    color: #1967d2;
+    color: var(--info-accent);
 }
 
 .info-box a {
-    color: #1967d2;
+    color: var(--info-accent);
     text-decoration: none;
-    border-bottom: 1px solid #1967d2;
+    border-bottom: 1px solid var(--info-accent);
 }
 
 .info-box a:hover {
-    border-bottom: 2px solid #1967d2;
+    border-bottom: 2px solid var(--info-accent);
 }
 
 /* Feature Grid */
@@ -250,7 +250,7 @@
 }
 
 .feature-card {
-    background: var(--background);
+    background: var(--surface-elevated);
     border: 1px solid var(--border);
     border-radius: 8px;
     padding: 20px;
@@ -339,7 +339,7 @@
 .api-table table {
     width: 100%;
     border-collapse: collapse;
-    background: var(--background);
+    background: var(--surface-elevated);
     border: 1px solid var(--border);
     border-radius: 8px;
     overflow: hidden;

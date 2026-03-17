@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KnockScript Documentation</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="docs.css">
+    <link rel="stylesheet" href="styles.css?v=dark-mode">
+    <link rel="stylesheet" href="docs.css?v=dark-mode">
     <link rel="icon" type="image/jpeg" href="favicon.jpeg">
     <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
 </head>
@@ -20,6 +20,11 @@
                 </div>
             </div>
             <div class="nav-right">
+                <button id="themeToggle" class="nav-link theme-toggle" type="button" aria-label="Enable dark mode" aria-pressed="false">
+                    <svg class="theme-toggle-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/>
+                    </svg>
+                </button>
                 <a href="index.html" class="nav-link">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <polyline points="16 18 22 12 16 6"/>
@@ -620,6 +625,7 @@ Pop who? from numbers</code></pre>
         </main>
     </div>
 
-    <script src="docs.js"></script>
+    <script src="theme.js?v=dark-mode"></script>
+    <script src="docs.js?v=dark-mode"></script>
 </body>
 </html>
