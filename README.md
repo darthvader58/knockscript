@@ -1,6 +1,6 @@
 # KnockScript
 
-A programming language based on knock-knock jokes. Every statement follows the classic "Knock knock" → "Who's there?" → Command → "Command who?" pattern.
+A toy programming language built around knock-knock jokes. Version two keeps the same four-line rhythm, but the commands now use joke names that read more like punchlines than placeholders.
 
 ## Quick Start
 
@@ -32,8 +32,8 @@ ruby web/app.rb
 ```knockscript
 Knock knock
 Who's there?
-Print
-Print who? "Hello, World!"
+Lettuce
+Lettuce who? "Hello, World!"
 ```
 
 ### Variables
@@ -41,8 +41,8 @@ Print who? "Hello, World!"
 ```knockscript
 Knock knock
 Who's there?
-Set
-Set who? x to 42
+Alby-Setin
+Alby-Setin who? x to 42
 ```
 
 ### Conditionals
@@ -50,40 +50,125 @@ Set who? x to 42
 ```knockscript
 Knock knock
 Who's there?
-If
-If who? x greater than 10
+Anita
+Anita who? x greater than 10
     Knock knock
     Who's there?
-    Print
-    Print who? "x is big"
+    Lettuce
+    Lettuce who? "x is big"
+Anita also x equal to 10
+    Knock knock
+    Who's there?
+    Lettuce
+    Lettuce who? "x is exactly ten"
 Otherwise
     Knock knock
     Who's there?
-    Print
-    Print who? "x is small"
+    Lettuce
+    Lettuce who? "x is small"
 Done
 ```
 
-### Classes
+### Classes, Methods, and Calls
 
 ```knockscript
 Knock knock
 Who's there?
-Class
-Class who? Person with name and age
+Kit
+Kit who? Person with name and age
 
 Knock knock
 Who's there?
-Set
-Set who? alice to new Person with name "Alice" and age 30
+Dewey
+Dewey who? greet for Person
+    Knock knock
+    Who's there?
+    Lettuce
+    Lettuce who? name
+Done
+
+Knock knock
+Who's there?
+Alby-Setin
+Alby-Setin who? alice to Fresh Person with name "Alice" and age 30
+
+Knock knock
+Who's there?
+Europe
+Europe who? greet on alice
+```
+
+### Arrays
+
+```knockscript
+Knock knock
+Who's there?
+Alby-Setin
+Alby-Setin who? nums to list with 1, 2, 3
+
+Knock knock
+Who's there?
+Sherwood
+Sherwood who? 4 to nums
+
+Knock knock
+Who's there?
+Patcha
+Patcha who? 1 of nums to 99
+
+Knock knock
+Who's there?
+Lettuce
+Lettuce who? Howie nums
+```
+
+### Functions
+
+```knockscript
+Knock knock
+Who's there?
+Doozy
+Doozy who? add with left and right
+    Knock knock
+    Who's there?
+    Backatcha
+    Backatcha who? left with extra right
+Done
+
+Knock knock
+Who's there?
+Lettuce
+Lettuce who? Europe add with 2 and 3
+```
+
+### Dictionaries
+
+```knockscript
+Knock knock
+Who's there?
+Alby-Setin
+Alby-Setin who? person to Oxford with name "Alice" and age 30
+
+Knock knock
+Who's there?
+Lettuce
+Lettuce who? Keysy name from person
+
+Knock knock
+Who's there?
+Slotta
+Slotta who? age of person to 31
 ```
 
 ## Features
 
-- Variables and arithmetic operations
-- Control flow (if/else, while, for loops)
-- Object-oriented programming (classes, methods, attributes)
-- Arrays and basic data structures
+- Variables, arithmetic, and comparisons
+- Control flow (`Anita`, `Antil`, `Wanna`, `Anita also`, `Chance` / `Unlucky`)
+- Object-oriented programming (`Kit`, `Dewey`, `Europe`, attributes)
+- Arrays and basic data-structure helpers (`Howie`, `Whichy`, `Patcha`, `Dosset Dave`, `Skipper`)
+- Dictionaries via `Oxford`, `Keysy`, and `Slotta`
+- Standalone functions and return values
+- Input plus loop control (`Askem`, `Enough`, `Carryon`)
 - Web-based code editor and runner
 
 ## Project Structure

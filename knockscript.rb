@@ -3,7 +3,7 @@ require_relative 'parser'
 require_relative 'interpreter'
 
 class KnockScript
-  def self.run(source_code)
+  def self.run(source_code, input_provider = nil)
     # Tokenize
     lexer = Lexer.new(source_code)
     tokens = lexer.tokenize
@@ -13,13 +13,13 @@ class KnockScript
     ast = parser.parse
     
     # Interpret
-    interpreter = Interpreter.new
+    interpreter = Interpreter.new(input_provider)
     interpreter.execute(ast)
   end
   
-  def self.run_file(filename)
+  def self.run_file(filename, input_provider = nil)
     source_code = File.read(filename)
-    run(source_code)
+    run(source_code, input_provider)
   end
 end
 

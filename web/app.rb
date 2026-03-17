@@ -92,7 +92,14 @@ post '/compile' do
   
   begin
     data = JSON.parse(request.body.read)
-    result = KnockScript.run(data['code'])
+    inputs = Array(data['inputs']).map(&:to_s)
+    input_provider = lambda do |prompt|
+      raise InputRequest.new(prompt) if inputs.empty?
+
+      inputs.shift
+    end
+
+    result = KnockScript.run(data['code'], input_provider)
     result.to_json
   rescue JSON::ParserError => e
     { success: false, error: "Invalid JSON: #{e.message}" }.to_json
@@ -110,7 +117,7 @@ get '/examples' do
     examples_dir = File.expand_path('../examples', File.dirname(__FILE__))
     examples = {}
     
-    %w[hello_world classes].each do |name|
+    %w[hello_world classes functions collections flow_control input_and_errors v2_features].each do |name|
       path = File.join(examples_dir, "#{name}.ks")
       examples[name.to_sym] = File.read(path) if File.exist?(path)
     end

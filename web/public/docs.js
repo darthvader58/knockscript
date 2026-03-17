@@ -47,28 +47,24 @@ document.querySelectorAll('.docs-section[id]').forEach(section => {
     observer.observe(section);
 });
 
-// Copy code functionality
-document.querySelectorAll('.copy-btn').forEach(button => {
+function attachCopyBehavior(button) {
     button.addEventListener('click', function() {
         const code = this.getAttribute('data-copy');
-        
-        // Create temporary textarea
+
         const textarea = document.createElement('textarea');
         textarea.value = code;
         textarea.style.position = 'fixed';
         textarea.style.opacity = '0';
         document.body.appendChild(textarea);
-        
-        // Select and copy
+
         textarea.select();
         try {
             document.execCommand('copy');
-            
-            // Update button text
+
             const originalText = this.textContent;
             this.textContent = 'Copied!';
             this.classList.add('copied');
-            
+
             setTimeout(() => {
                 this.textContent = originalText;
                 this.classList.remove('copied');
@@ -76,10 +72,55 @@ document.querySelectorAll('.copy-btn').forEach(button => {
         } catch (err) {
             console.error('Failed to copy:', err);
         }
-        
+
         document.body.removeChild(textarea);
     });
-});
+}
+
+function inferCodeLabel(code) {
+    if (code.includes('Knock knock')) {
+        return 'KnockScript';
+    }
+
+    if (code.includes('ruby ') || code.includes('bundle ')) {
+        return 'Terminal';
+    }
+
+    return 'Example';
+}
+
+function prepareCodeBlocks() {
+    document.querySelectorAll('.code-block').forEach(block => {
+        const existingButton = block.querySelector('.copy-btn');
+        if (existingButton) {
+            attachCopyBehavior(existingButton);
+            return;
+        }
+
+        const codeElement = block.querySelector('pre code');
+        if (!codeElement) {
+            return;
+        }
+
+        const code = codeElement.textContent;
+        const header = document.createElement('div');
+        header.className = 'code-header';
+
+        const label = document.createElement('span');
+        label.textContent = inferCodeLabel(code);
+
+        const button = document.createElement('button');
+        button.className = 'copy-btn';
+        button.textContent = 'Copy';
+        button.setAttribute('data-copy', code);
+
+        header.appendChild(label);
+        header.appendChild(button);
+        block.insertBefore(header, block.firstChild);
+
+        attachCopyBehavior(button);
+    });
+}
 
 // Add keyboard navigation
 document.addEventListener('keydown', (e) => {
@@ -164,6 +205,8 @@ if (backToTopButton) {
 
 // Initialize on page load
 window.addEventListener('load', () => {
+    prepareCodeBlocks();
+
     // Set initial active TOC item based on URL hash
     if (window.location.hash) {
         updateActiveTOC(window.location.hash);

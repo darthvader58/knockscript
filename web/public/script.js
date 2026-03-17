@@ -17,88 +17,208 @@ const sidebarItems = document.querySelectorAll('.sidebar-item');
 const examples = {
     hello_world: `Knock knock
 Who's there?
-Print
-Print who? "Hello, World!"`,
+Lettuce
+Lettuce who? "Hello, World!"`,
     
     arithmetic: `Knock knock
 Who's there?
-Set
-Set who? x to 10
+Alby-Setin
+Alby-Setin who? x to 10
 
 Knock knock
 Who's there?
-Set
-Set who? y to 5
+Alby-Setin
+Alby-Setin who? y to 5
 
 Knock knock
 Who's there?
-Set
-Set who? result to x plus y times 2
+Alby-Setin
+Alby-Setin who? result to x with extra y on repeat 2
 
 Knock knock
 Who's there?
-Print
-Print who? "Result: "
+Lettuce
+Lettuce who? "Result: "
 
 Knock knock
 Who's there?
-Print
-Print who? result`,
+Lettuce
+Lettuce who? result`,
     
     loops: `Knock knock
 Who's there?
-Set
-Set who? counter to 1
+Alby-Setin
+Alby-Setin who? counter to 1
 
 Knock knock
 Who's there?
-While
-While who? counter less than 6
+Antil
+Antil who? counter less than 6
     Knock knock
     Who's there?
-    Print
-    Print who? counter
+    Lettuce
+    Lettuce who? counter
     
     Knock knock
     Who's there?
-    Set
-    Set who? counter to counter plus 1
+    Alby-Setin
+    Alby-Setin who? counter to counter with extra 1
 Done
 
 Knock knock
 Who's there?
-Print
-Print who? "Done!"`,
+Lettuce
+Lettuce who? "Done!"`,
     
     classes: `Knock knock
 Who's there?
-Class
-Class who? Person with name and age
+Kit
+Kit who? Person with name and age
 
 Knock knock
 Who's there?
-Method
-Method who? greet for Person
+Dewey
+Dewey who? greet for Person
     Knock knock
     Who's there?
-    Print
-    Print who? "Hello, I'm "
+    Lettuce
+    Lettuce who? "Hello, I'm "
     
     Knock knock
     Who's there?
-    Print
-    Print who? name
+    Lettuce
+    Lettuce who? name
 Done
 
 Knock knock
 Who's there?
-Set
-Set who? alice to new Person with name "Alice" and age 30
+Alby-Setin
+Alby-Setin who? alice to Fresh Person with name "Alice" and age 30
 
 Knock knock
 Who's there?
-Call
-Call who? greet on alice`
+Europe
+Europe who? greet on alice`
+,
+
+    functions: `# Reusable logic with parameters and return values
+Knock knock
+Who's there?
+Doozy
+Doozy who? addTax with amount and rate
+    Knock knock
+    Who's there?
+    Backatcha
+    Backatcha who? amount with extra amount on repeat rate
+Done
+
+Knock knock
+Who's there?
+Alby-Setin
+Alby-Setin who? total to Europe addTax with 80 and 0.1
+
+Knock knock
+Who's there?
+Lettuce
+Lettuce who? total`,
+
+    collections: `# Arrays and dictionaries in one place
+Knock knock
+Who's there?
+Alby-Setin
+Alby-Setin who? numbers to list with 3, 6, 9
+
+Knock knock
+Who's there?
+Sherwood
+Sherwood who? 12 to numbers
+
+Knock knock
+Who's there?
+Patcha
+Patcha who? 1 of numbers to 99
+
+Knock knock
+Who's there?
+Lettuce
+Lettuce who? Whichy 1 from numbers
+
+Knock knock
+Who's there?
+Alby-Setin
+Alby-Setin who? person to Oxford with name "Alice" and age 30
+
+Knock knock
+Who's there?
+Slotta
+Slotta who? city of person to "Phoenix"
+
+Knock knock
+Who's there?
+Lettuce
+Lettuce who? Keysy city from person
+
+Knock knock
+Who's there?
+Lettuce
+Lettuce who? Dosset Dave age in person`,
+
+    flow_control: `# Else-if chains, continue, and break
+Knock knock
+Who's there?
+Wanna
+Wanna who? i from 1 to 6
+    Knock knock
+    Who's there?
+    Anita
+    Anita who? i equal to 2
+        Knock knock
+        Who's there?
+        Carryon
+        Carryon who?
+    Anita also i equal to 5
+        Knock knock
+        Who's there?
+        Enough
+        Enough who?
+    Otherwise
+        Knock knock
+        Who's there?
+        Lettuce
+        Lettuce who? i
+    Done
+Done`,
+
+    input_and_errors: `# Input and try/catch
+Knock knock
+Who's there?
+Alby-Setin
+Alby-Setin who? name to Askem "What is your name?"
+
+Knock knock
+Who's there?
+Chance
+Chance who?
+    Knock knock
+    Who's there?
+    Lettuce
+    Lettuce who? "Hello, "
+
+    Knock knock
+    Who's there?
+    Lettuce
+    Lettuce who? name
+
+    Knock knock
+    Who's there?
+    Lettuce
+    Lettuce who? 10 split by 0
+Unlucky
+    Knock knock
+    Who's there?
+    Lettuce
+    Lettuce who? "That went sideways."
+Done`
 };
 
 // Sidebar navigation
@@ -172,15 +292,7 @@ runBtn.addEventListener('click', async () => {
     runBtn.innerHTML = '<span class="loading"></span> Running...';
     
     try {
-        const response = await fetch('/compile', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ code })
-        });
-        
-        const result = await response.json();
+        const result = await runCodeWithInput(code);
         
         if (result.success) {
             showOutput(result.output || '(No output)', true);
@@ -199,6 +311,36 @@ runBtn.addEventListener('click', async () => {
         `;
     }
 });
+
+async function runCodeWithInput(code) {
+    const inputs = [];
+    
+    while (true) {
+        const response = await fetch('/compile', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ code, inputs })
+        });
+        
+        const result = await response.json();
+        
+        if (!result.needs_input) {
+            return result;
+        }
+        
+        const answer = window.prompt(result.prompt || 'Input:', '');
+        if (answer === null) {
+            return {
+                success: false,
+                error: 'Input cancelled by user.'
+            };
+        }
+        
+        inputs.push(answer);
+    }
+}
 
 // Clear Editor
 clearBtn.addEventListener('click', () => {

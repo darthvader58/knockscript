@@ -10,7 +10,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- Top Navigation -->
     <nav class="top-nav">
         <div class="nav-content">
             <div class="nav-left">
@@ -37,48 +36,48 @@
         </div>
     </nav>
 
-    <!-- Main Container -->
     <div class="docs-container">
-        <!-- Sidebar TOC -->
         <aside class="docs-sidebar">
             <div class="toc">
                 <div class="toc-header">Contents</div>
                 <a href="#getting-started" class="toc-item">Getting Started</a>
                 <a href="#installation" class="toc-item toc-sub">Installation</a>
                 <a href="#quick-start" class="toc-item toc-sub">Quick Start</a>
-                
-                <a href="#language-syntax" class="toc-item">Language Syntax</a>
+                <a href="#language-syntax" class="toc-item">Language Model</a>
+                <a href="#joke-shape" class="toc-item toc-sub">Statement Shape</a>
+                <a href="#full-joke" class="toc-item toc-sub">Full Joke</a>
                 <a href="#hello-world" class="toc-item toc-sub">Hello World</a>
-                <a href="#variables" class="toc-item toc-sub">Variables</a>
-                <a href="#arithmetic" class="toc-item toc-sub">Arithmetic</a>
+                <a href="#variables" class="toc-item toc-sub">Variables & Output</a>
+                <a href="#arithmetic" class="toc-item toc-sub">Arithmetic & Logic</a>
                 <a href="#conditionals" class="toc-item toc-sub">Conditionals</a>
                 <a href="#loops" class="toc-item toc-sub">Loops</a>
-                <a href="#classes" class="toc-item toc-sub">Classes & OOP</a>
-                <a href="#arrays" class="toc-item toc-sub">Arrays</a>
-                
-                <a href="#features" class="toc-item">Features</a>
+                <a href="#functions" class="toc-item toc-sub">Functions</a>
+                <a href="#classes" class="toc-item toc-sub">Classes & Methods</a>
+                <a href="#arrays" class="toc-item toc-sub">Lists / Arrays</a>
+                <a href="#dictionaries" class="toc-item toc-sub">Dictionaries</a>
+                <a href="#input-errors" class="toc-item toc-sub">Input & Errors</a>
+                <a href="#comments" class="toc-item toc-sub">Comments</a>
+                <a href="#examples" class="toc-item">Worked Examples</a>
+                <a href="#features" class="toc-item">Feature Summary</a>
                 <a href="#project-structure" class="toc-item">Project Structure</a>
-                <a href="#contributing" class="toc-item">Contributing</a>
-                <a href="#api-reference" class="toc-item">API Reference</a>
+                <a href="#api-reference" class="toc-item">Syntax Reference</a>
             </div>
         </aside>
 
-        <!-- Main Content -->
         <main class="docs-content">
-            <!-- Hero Section -->
             <div class="docs-hero">
                 <h1>KnockScript Documentation</h1>
-                <p class="docs-subtitle">A programming language based on knock-knock jokes. Every statement follows the classic "Knock knock" → "Who's there?" → Command → "Command who?" pattern.</p>
+                <p class="docs-subtitle">KnockScript is a toy programming language where every statement is delivered as a lame knock-knock joke. If you get it, you get it. <br><br>So Knock Knock Messieur et Mesdames!</p>
                 <div class="hero-buttons">
-                    <a href="#getting-started" class="btn btn-primary">Get Started</a>
-                    <a href="index.html" class="btn btn-secondary">Try Console</a>
+                    <a href="#getting-started" class="btn btn-primary">Start Reading</a>
+                    <a href="index.html" class="btn btn-secondary">Open Compiler</a>
                 </div>
             </div>
 
-            <!-- Getting Started -->
             <section id="getting-started" class="docs-section">
                 <h2>Getting Started</h2>
-                <p>Welcome to KnockScript! This guide will help you get up and running with the most lame programming language.</p>
+                <p>KnockScript is easiest to understand if you treat it as a normal interpreted language with a joke-shaped syntax layer. Variables, functions, classes, lists, dictionaries, loops, input, and error handling are all real features. The joke words are just the surface syntax.</p>
+                <p>This page explains the mental model first, then walks feature by feature with examples that show what the code is doing and why the syntax is shaped the way it is.</p>
             </section>
 
             <section id="installation" class="docs-section">
@@ -94,7 +93,6 @@ bundle install">Copy</button>
 cd knockscript
 bundle install</code></pre>
                 </div>
-                
                 <div class="info-box">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <circle cx="12" cy="12" r="10"/>
@@ -102,27 +100,26 @@ bundle install</code></pre>
                         <line x1="12" y1="8" x2="12.01" y2="8"/>
                     </svg>
                     <div>
-                        <strong>Prerequisites:</strong> Ruby 3.2.0 or higher
+                        <strong>Prerequisite:</strong> Ruby 3.2.0 or higher.
                     </div>
                 </div>
             </section>
 
             <section id="quick-start" class="docs-section">
                 <h3>Quick Start</h3>
-                
-                <h4>Run a Program</h4>
+                <p>Run an example from the command line:</p>
                 <div class="code-block">
                     <div class="code-header">
-                        <span>Terminal</span>
+                        <span>CLI</span>
                         <button class="copy-btn" data-copy="ruby knockscript.rb examples/hello_world.ks">Copy</button>
                     </div>
                     <pre><code>ruby knockscript.rb examples/hello_world.ks</code></pre>
                 </div>
 
-                <h4>Web Interface</h4>
+                <p>Or launch the browser compiler:</p>
                 <div class="code-block">
                     <div class="code-header">
-                        <span>Terminal</span>
+                        <span>Web</span>
                         <button class="copy-btn" data-copy="ruby web/app.rb">Copy</button>
                     </div>
                     <pre><code>ruby web/app.rb
@@ -130,489 +127,547 @@ bundle install</code></pre>
                 </div>
             </section>
 
-            <!-- Language Syntax -->
             <section id="language-syntax" class="docs-section">
-                <h2>Language Syntax</h2>
-                <p>KnockScript follows a unique syntax pattern based on knock-knock jokes. Every statement begins with the classic setup and punchline structure.</p>
+                <h2>Language Model</h2>
+                <p>The fastest way to understand KnockScript is: every statement has a setup line, a response line, a command line, and a payload line. The payload line is the part that carries the actual meaning.</p>
+            </section>
+
+            <section id="joke-shape" class="docs-section">
+                <h3>Statement Shape</h3>
+                <p>Most statements look like this:</p>
+                <div class="code-block">
+                    <pre><code>Knock knock
+Who's there?
+[Command]
+[Command] who? [arguments or expression]</code></pre>
+                </div>
+                <p>Example:</p>
+                <div class="code-block">
+                    <pre><code>Knock knock
+Who's there?
+Lettuce
+Lettuce who? "Hello!"</code></pre>
+                </div>
+                <p>`Lettuce` is the command name. `"Hello!"` is the payload. The interpreter ignores the joke framing and executes the command.</p>
+            </section>
+
+            <section id="full-joke" class="docs-section">
+                <h3>The Full Joke</h3>
+                <p>Since the language insists on the joke frame, the docs should at least show the whole thing once:</p>
+                <div class="code-block">
+                    <pre><code>Knock knock.
+Who's there?
+Lettuce.
+Lettuce who?
+Lettuce write some code.</code></pre>
+                </div>
+                <p>KnockScript effectively turns that structure into a programming template.</p>
             </section>
 
             <section id="hello-world" class="docs-section">
                 <h3>Hello World</h3>
-                <p>Your first KnockScript program:</p>
+                <p>This is the smallest useful program:</p>
                 <div class="code-block">
                     <div class="code-header">
                         <span>hello_world.ks</span>
                         <button class="copy-btn" data-copy='Knock knock
 Who&apos;s there?
-Print
-Print who? "Hello, World!"'>Copy</button>
+Lettuce
+Lettuce who? "Hello, World!"'>Copy</button>
                     </div>
                     <pre><code>Knock knock
 Who's there?
-Print
-Print who? "Hello, World!"</code></pre>
+Lettuce
+Lettuce who? "Hello, World!"</code></pre>
                 </div>
+                <p><code>Lettuce</code> means “print this expression.” If you know how to print, you already understand the general shape of the language.</p>
             </section>
 
             <section id="variables" class="docs-section">
-                <h3>Variables</h3>
-                <p>Declare and assign values to variables:</p>
+                <h3>Variables & Output</h3>
+                <p>Use <code>Alby-Setin</code> to assign a value to a variable and <code>Lettuce</code> to display it.</p>
                 <div class="code-block">
-                    <div class="code-header">
-                        <span>variables.ks</span>
-                        <button class="copy-btn" data-copy="Knock knock
-Who's there?
-Set
-Set who? x to 42">Copy</button>
-                    </div>
                     <pre><code>Knock knock
 Who's there?
-Set
-Set who? x to 42</code></pre>
+Alby-Setin
+Alby-Setin who? score to 42
+
+Knock knock
+Who's there?
+Lettuce
+Lettuce who? score</code></pre>
                 </div>
+                <p>The right-hand side of an assignment can be a literal, another variable, a function call, a list lookup, a dictionary lookup, or a full arithmetic expression.</p>
             </section>
 
             <section id="arithmetic" class="docs-section">
-                <h3>Arithmetic Operations</h3>
-                <p>Perform mathematical calculations:</p>
+                <h3>Arithmetic, Comparisons, and Boolean Logic</h3>
+                <p>KnockScript uses readable phrase operators instead of symbols in source code.</p>
+                <div class="api-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Phrase</th>
+                                <th>Meaning</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><code>with extra</code></td><td>Addition</td></tr>
+                            <tr><td><code>without</code></td><td>Subtraction</td></tr>
+                            <tr><td><code>on repeat</code></td><td>Multiplication</td></tr>
+                            <tr><td><code>split by</code></td><td>Division</td></tr>
+                            <tr><td><code>greater than</code></td><td>Comparison</td></tr>
+                            <tr><td><code>less than</code></td><td>Comparison</td></tr>
+                            <tr><td><code>equal to</code></td><td>Comparison</td></tr>
+                            <tr><td><code>not equal to</code></td><td>Comparison</td></tr>
+                            <tr><td><code>Nope</code></td><td>Boolean negation</td></tr>
+                        </tbody>
+                    </table>
+                </div>
                 <div class="code-block">
-                    <div class="code-header">
-                        <span>arithmetic.ks</span>
-                    </div>
                     <pre><code>Knock knock
 Who's there?
-Set
-Set who? x to 10
+Alby-Setin
+Alby-Setin who? total to 10 with extra 5 on repeat 2
 
 Knock knock
 Who's there?
-Set
-Set who? y to 5
+Lettuce
+Lettuce who? total
 
 Knock knock
 Who's there?
-Set
-Set who? sum to x plus y
-
-Knock knock
-Who's there?
-Set
-Set who? product to x times y
-
-Knock knock
-Who's there?
-Set
-Set who? quotient to x divided by y</code></pre>
+Lettuce
+Lettuce who? Nope false</code></pre>
                 </div>
-                
-                <div class="info-box">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="12" cy="12" r="10"/>
-                        <line x1="12" y1="16" x2="12" y2="12"/>
-                        <line x1="12" y1="8" x2="12.01" y2="8"/>
-                    </svg>
-                    <div>
-                        <strong>Operators:</strong> <code>plus</code>, <code>minus</code>, <code>times</code>, <code>divided by</code>
-                    </div>
-                </div>
+                <p>Operator precedence follows the normal arithmetic expectation: multiplication and division bind tighter than addition and subtraction.</p>
             </section>
 
             <section id="conditionals" class="docs-section">
-                <h3>Conditionals (If/Else)</h3>
-                <p>Control flow with conditional statements:</p>
+                <h3>Conditionals</h3>
+                <p><code>Anita</code> starts an <code>if</code> block. <code>Anita also</code> behaves like <code>else if</code>. <code>Otherwise</code> is the final fallback. <code>Done</code> closes the entire conditional.</p>
                 <div class="code-block">
-                    <div class="code-header">
-                        <span>conditionals.ks</span>
-                    </div>
                     <pre><code>Knock knock
 Who's there?
-If
-If who? x greater than 10
+Anita
+Anita who? temp greater than 90
     Knock knock
     Who's there?
-    Print
-    Print who? "x is big"
+    Lettuce
+    Lettuce who? "hot"
+Anita also temp equal to 90
+    Knock knock
+    Who's there?
+    Lettuce
+    Lettuce who? "exactly ninety"
 Otherwise
     Knock knock
     Who's there?
-    Print
-    Print who? "x is small"
+    Lettuce
+    Lettuce who? "not hot"
 Done</code></pre>
                 </div>
-                
-                <div class="info-box">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="12" cy="12" r="10"/>
-                        <line x1="12" y1="16" x2="12" y2="12"/>
-                        <line x1="12" y1="8" x2="12.01" y2="8"/>
-                    </svg>
-                    <div>
-                        <strong>Comparison Operators:</strong> <code>greater than</code>, <code>less than</code>, <code>equal to</code>, <code>not equal to</code>
-                    </div>
-                </div>
+                <p>Mentally, read the payload line as the real syntax: “if temp is greater than 90, do these statements.”</p>
             </section>
 
             <section id="loops" class="docs-section">
                 <h3>Loops</h3>
-                
-                <h4>While Loops</h4>
+                <p><code>Antil</code> is a while loop. <code>Wanna</code> is a numeric for loop. <code>Enough</code> breaks out of a loop and <code>Carryon</code> skips to the next iteration.</p>
+
+                <h4>While Loop</h4>
                 <div class="code-block">
-                    <div class="code-header">
-                        <span>while_loop.ks</span>
-                    </div>
                     <pre><code>Knock knock
 Who's there?
-Set
-Set who? counter to 1
+Alby-Setin
+Alby-Setin who? counter to 1
 
 Knock knock
 Who's there?
-While
-While who? counter less than 6
+Antil
+Antil who? counter less than 4
     Knock knock
     Who's there?
-    Print
-    Print who? counter
-    
+    Lettuce
+    Lettuce who? counter
+
     Knock knock
     Who's there?
-    Set
-    Set who? counter to counter plus 1
+    Alby-Setin
+    Alby-Setin who? counter to counter with extra 1
 Done</code></pre>
                 </div>
 
-                <h4>For Loops</h4>
+                <h4>For Loop</h4>
                 <div class="code-block">
-                    <div class="code-header">
-                        <span>for_loop.ks</span>
-                    </div>
                     <pre><code>Knock knock
 Who's there?
-For
-For who? i from 1 to 5
+Wanna
+Wanna who? i from 1 to 5
     Knock knock
     Who's there?
-    Print
-    Print who? i
+    Lettuce
+    Lettuce who? i
 Done</code></pre>
                 </div>
+
+                <h4>Break / Continue</h4>
+                <div class="code-block">
+                    <pre><code>Knock knock
+Who's there?
+Wanna
+Wanna who? i from 1 to 6
+    Knock knock
+    Who's there?
+    Anita
+    Anita who? i equal to 2
+        Knock knock
+        Who's there?
+        Carryon
+        Carryon who?
+    Anita also i equal to 5
+        Knock knock
+        Who's there?
+        Enough
+        Enough who?
+    Otherwise
+        Knock knock
+        Who's there?
+        Lettuce
+        Lettuce who? i
+    Done
+Done</code></pre>
+                </div>
+            </section>
+
+            <section id="functions" class="docs-section">
+                <h3>Functions and Return Values</h3>
+                <p><code>Doozy</code> defines a standalone function. <code>Backatcha</code> returns a value. <code>Europe</code> can call both standalone functions and object methods.</p>
+                <div class="code-block">
+                    <pre><code>Knock knock
+Who's there?
+Doozy
+Doozy who? addTax with amount and rate
+    Knock knock
+    Who's there?
+    Backatcha
+    Backatcha who? amount with extra amount on repeat rate
+Done
+
+Knock knock
+Who's there?
+Alby-Setin
+Alby-Setin who? total to Europe addTax with 80 and 0.1
+
+Knock knock
+Who's there?
+Lettuce
+Lettuce who? total</code></pre>
+                </div>
+                <p>The parameters are introduced after <code>with</code> and separated by <code>and</code>. If a function does not return explicitly, its result is <code>nil</code>.</p>
             </section>
 
             <section id="classes" class="docs-section">
-                <h3>Classes & Object-Oriented Programming</h3>
-                
-                <h4>Defining a Class</h4>
+                <h3>Classes, Methods, Objects, and Attributes</h3>
+                <p><code>Kit</code> defines a class with named attributes. <code>Fresh</code> creates an instance. <code>Dewey</code> defines a method. <code>Europe</code> calls a method on an object. <code>Justin</code> reads an attribute, and <code>Alby-Setin</code> can also update an attribute directly.</p>
                 <div class="code-block">
-                    <div class="code-header">
-                        <span>class_definition.ks</span>
-                    </div>
                     <pre><code>Knock knock
 Who's there?
-Class
-Class who? Person with name and age</code></pre>
-                </div>
-
-                <h4>Creating Methods</h4>
-                <div class="code-block">
-                    <div class="code-header">
-                        <span>method_definition.ks</span>
-                    </div>
-                    <pre><code>Knock knock
-Who's there?
-Method
-Method who? greet for Person
-    Knock knock
-    Who's there?
-    Print
-    Print who? "Hello, my name is "
-    
-    Knock knock
-    Who's there?
-    Print
-    Print who? name
-Done</code></pre>
-                </div>
-
-                <h4>Creating Instances</h4>
-                <div class="code-block">
-                    <div class="code-header">
-                        <span>instantiation.ks</span>
-                    </div>
-                    <pre><code>Knock knock
-Who's there?
-Set
-Set who? alice to new Person with name "Alice" and age 30</code></pre>
-                </div>
-
-                <h4>Calling Methods</h4>
-                <div class="code-block">
-                    <div class="code-header">
-                        <span>method_call.ks</span>
-                    </div>
-                    <pre><code>Knock knock
-Who's there?
-Call
-Call who? greet on alice</code></pre>
-                </div>
-
-                <h4>Setting Attributes</h4>
-                <div class="code-block">
-                    <div class="code-header">
-                        <span>set_attribute.ks</span>
-                    </div>
-                    <pre><code>Knock knock
-Who's there?
-Set
-Set who? age of alice to 31</code></pre>
-                </div>
-            </section>
-
-            <section id="arrays" class="docs-section">
-                <h3>Arrays</h3>
-                
-                <h4>Creating Arrays</h4>
-                <div class="code-block">
-                    <div class="code-header">
-                        <span>arrays.ks</span>
-                    </div>
-                    <pre><code>Knock knock
-Who's there?
-Set
-Set who? numbers to list with 1, 2, 3, 4, 5</code></pre>
-                </div>
-
-                <h4>Array Operations</h4>
-                <div class="code-block">
-                    <div class="code-header">
-                        <span>array_operations.ks</span>
-                    </div>
-                    <pre><code>Knock knock
-Who's there?
-Push
-Push who? 6 to numbers
+Kit
+Kit who? Person with name and age
 
 Knock knock
 Who's there?
-Pop
-Pop who? from numbers</code></pre>
+Dewey
+Dewey who? greet for Person
+    Knock knock
+    Who's there?
+    Lettuce
+    Lettuce who? "Hello, my name is "
+
+    Knock knock
+    Who's there?
+    Lettuce
+    Lettuce who? name
+Done
+
+Knock knock
+Who's there?
+Alby-Setin
+Alby-Setin who? alice to Fresh Person with name "Alice" and age 30
+
+Knock knock
+Who's there?
+Europe
+Europe who? greet on alice
+
+Knock knock
+Who's there?
+Alby-Setin
+Alby-Setin who? age of alice to 31</code></pre>
+                </div>
+                <p>Within a method body, attributes behave like local variables. Updating <code>age</code> inside the method updates the object’s attribute when the method finishes.</p>
+            </section>
+
+            <section id="arrays" class="docs-section">
+                <h3>Lists / Arrays</h3>
+                <p>KnockScript’s array literal is <code>list with</code>. It supports appending, removing from the end, replacing an index, reading an index, checking length, and checking containment.</p>
+                <div class="code-block">
+                    <pre><code>Knock knock
+Who's there?
+Alby-Setin
+Alby-Setin who? numbers to list with 3, 6, 9
+
+Knock knock
+Who's there?
+Sherwood
+Sherwood who? 12 to numbers
+
+Knock knock
+Who's there?
+Patcha
+Patcha who? 1 of numbers to 99
+
+Knock knock
+Who's there?
+Lettuce
+Lettuce who? Whichy 1 from numbers
+
+Knock knock
+Who's there?
+Lettuce
+Lettuce who? Howie numbers
+
+Knock knock
+Who's there?
+Lettuce
+Lettuce who? Dosset Dave 99 in numbers
+
+Knock knock
+Who's there?
+Iva
+Iva who? from numbers</code></pre>
+                </div>
+                <div class="api-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Feature</th>
+                                <th>Syntax</th>
+                                <th>Meaning</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Create list</td><td><code>list with 1, 2, 3</code></td><td>Literal array value</td></tr>
+                            <tr><td>Append</td><td><code>Sherwood who? value to list</code></td><td>Push to end</td></tr>
+                            <tr><td>Pop</td><td><code>Iva who? from list</code></td><td>Remove last element</td></tr>
+                            <tr><td>Set index</td><td><code>Patcha who? 0 of list to value</code></td><td>Replace element</td></tr>
+                            <tr><td>Get index</td><td><code>Whichy 0 from list</code></td><td>Read element</td></tr>
+                            <tr><td>Length</td><td><code>Howie list</code></td><td>Array length</td></tr>
+                            <tr><td>Contains</td><td><code>Dosset Dave value in list</code></td><td>Membership check</td></tr>
+                        </tbody>
+                    </table>
                 </div>
             </section>
 
-            <!-- Features -->
+            <section id="dictionaries" class="docs-section">
+                <h3>Dictionaries</h3>
+                <p>Dictionaries are key-value maps. In KnockScript, you create one with <code>Oxford</code>. You read a key with <code>Keysy</code>, update a key with <code>Slotta</code>, check key existence with <code>Dosset Dave</code>, and remove a key with <code>Skipper</code>.</p>
+                <div class="code-block">
+                    <pre><code>Knock knock
+Who's there?
+Alby-Setin
+Alby-Setin who? person to Oxford with name "Alice" and age 30
+
+Knock knock
+Who's there?
+Lettuce
+Lettuce who? Keysy name from person
+
+Knock knock
+Who's there?
+Slotta
+Slotta who? city of person to "Phoenix"
+
+Knock knock
+Who's there?
+Lettuce
+Lettuce who? Dosset Dave age in person
+
+Knock knock
+Who's there?
+Skipper
+Skipper who? age from person
+
+Knock knock
+Who's there?
+Lettuce
+Lettuce who? person</code></pre>
+                </div>
+                <p>Dictionary keys are usually written as bare words like <code>name</code> or <code>age</code>. Values can be strings, numbers, booleans, lists, function results, or any other expression.</p>
+                <div class="api-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Feature</th>
+                                <th>Syntax</th>
+                                <th>Meaning</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Create dictionary</td><td><code>Oxford with name "Alice" and age 30</code></td><td>Literal key-value map</td></tr>
+                            <tr><td>Lookup key</td><td><code>Keysy age from person</code></td><td>Read a value</td></tr>
+                            <tr><td>Set key</td><td><code>Slotta who? age of person to 31</code></td><td>Insert or update a value</td></tr>
+                            <tr><td>Contains key</td><td><code>Dosset Dave age in person</code></td><td>Check whether the key exists</td></tr>
+                            <tr><td>Remove key</td><td><code>Skipper who? age from person</code></td><td>Delete a key from the dictionary</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p>If you are coming from JavaScript, think “object literal.” If you are coming from Python, think “dict.” If you are coming from Ruby, think “hash.”</p>
+            </section>
+
+            <section id="input-errors" class="docs-section">
+                <h3>Input and Error Handling</h3>
+                <p><code>Askem</code> prompts the user for input. <code>Chance</code> starts a protected block. <code>Unlucky</code> handles runtime errors from the protected block. This works in both CLI mode and the web compiler.</p>
+                <div class="code-block">
+                    <pre><code>Knock knock
+Who's there?
+Alby-Setin
+Alby-Setin who? name to Askem "What is your name?"
+
+Knock knock
+Who's there?
+Chance
+Chance who?
+    Knock knock
+    Who's there?
+    Lettuce
+    Lettuce who? "Hello, "
+
+    Knock knock
+    Who's there?
+    Lettuce
+    Lettuce who? name
+
+    Knock knock
+    Who's there?
+    Lettuce
+    Lettuce who? 10 split by 0
+Unlucky
+    Knock knock
+    Who's there?
+    Lettuce
+    Lettuce who? "That went sideways."
+Done</code></pre>
+                </div>
+            </section>
+
+            <section id="comments" class="docs-section">
+                <h3>Comments</h3>
+                <p>Single-line comments begin with <code>#</code>. Use them to annotate examples or explain the punchline when the joke name is not obvious at first glance.</p>
+                <div class="code-block">
+                    <pre><code># This line is ignored
+Knock knock
+Who's there?
+Lettuce
+Lettuce who? "Commented code still works."</code></pre>
+                </div>
+            </section>
+
+            <section id="examples" class="docs-section">
+                <h2>Worked Examples</h2>
+                <p>The examples shipped with the repo are designed to highlight specific parts of the language.</p>
+                <ul class="feature-list">
+                    <li><strong><code>examples/hello_world.ks</code>:</strong> the minimum valid program.</li>
+                    <li><strong><code>examples/classes.ks</code>:</strong> classes, methods, instance creation, method calls, and attribute updates.</li>
+                    <li><strong><code>examples/functions.ks</code>:</strong> parameters and return values.</li>
+                    <li><strong><code>examples/collections.ks</code>:</strong> both lists and dictionaries.</li>
+                    <li><strong><code>examples/flow_control.ks</code>:</strong> loops, <code>Anita also</code>, <code>Enough</code>, and <code>Carryon</code>.</li>
+                    <li><strong><code>examples/input_and_errors.ks</code>:</strong> interactive input and try/catch behavior.</li>
+                </ul>
+            </section>
+
             <section id="features" class="docs-section">
-                <h2>Features</h2>
+                <h2>Feature Summary</h2>
                 <div class="feature-grid">
                     <div class="feature-card">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <polyline points="16 18 22 12 16 6"/>
-                            <polyline points="8 6 2 12 8 18"/>
-                        </svg>
-                        <h4>Variables & Arithmetic</h4>
-                        <p>Full support for variables and mathematical operations</p>
+                        <h4>Readable Joke Syntax</h4>
+                        <p>Every feature is wrapped in a consistent knock-knock frame.</p>
                     </div>
                     <div class="feature-card">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M12 2L2 7L12 12L22 7L12 2Z"/>
-                            <path d="M2 17L12 22L22 17"/>
-                            <path d="M2 12L12 17L22 12"/>
-                        </svg>
+                        <h4>Expressions</h4>
+                        <p>Arithmetic, comparisons, booleans, function calls, list lookups, and dictionary lookups.</p>
+                    </div>
+                    <div class="feature-card">
                         <h4>Control Flow</h4>
-                        <p>If/else statements, while loops, and for loops</p>
+                        <p>If/else-if/else, while, for, break, continue, and try/catch.</p>
                     </div>
                     <div class="feature-card">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
-                            <line x1="9" y1="3" x2="9" y2="21"/>
-                        </svg>
-                        <h4>Object-Oriented</h4>
-                        <p>Classes, methods, and attributes for structured programming</p>
+                        <h4>Structured Data</h4>
+                        <p>Lists with indexing and dictionaries with key-based lookup.</p>
                     </div>
                     <div class="feature-card">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
-                            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
-                        </svg>
-                        <h4>Arrays</h4>
-                        <p>Basic data structures with push and pop operations</p>
+                        <h4>Reusable Code</h4>
+                        <p>Standalone functions, methods, parameters, and explicit returns.</p>
                     </div>
                     <div class="feature-card">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="12" cy="12" r="10"/>
-                            <path d="M12 6v6l4 2"/>
-                        </svg>
-                        <h4>Web Interface</h4>
-                        <p>Browser-based code editor and runner</p>
-                    </div>
-                    <div class="feature-card">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                            <polyline points="14 2 14 8 20 8"/>
-                        </svg>
-                        <h4>CLI Support</h4>
-                        <p>Run KnockScript files from the command line</p>
+                        <h4>Interactive Runner</h4>
+                        <p>CLI and web compiler both support input-driven programs.</p>
                     </div>
                 </div>
             </section>
 
-            <!-- Project Structure -->
             <section id="project-structure" class="docs-section">
                 <h2>Project Structure</h2>
                 <div class="code-block">
                     <pre><code>knockscript/
 ├── knockscript.rb      # Main CLI entry point
 ├── lexer.rb           # Tokenizes KnockScript source code
-├── parser.rb          # Parses tokens into Abstract Syntax Tree
-├── interpreter.rb     # Executes the AST
+├── parser.rb          # Turns tokens into an AST
+├── interpreter.rb     # Executes programs
 ├── ast_nodes.rb       # AST node definitions
-├── token.rb           # Token class definition
-├── environment.rb     # Variable scope management
-├── examples/          # Example KnockScript programs
-│   ├── hello_world.ks
-│   └── classes.ks
-├── web/               # Web interface
-│   ├── app.rb         # Sinatra web server
-│   └── public/        # Static web assets
-├── config.ru          # Rack configuration
-└── Dockerfile         # Container configuration</code></pre>
+├── environment.rb     # Variables, classes, and objects
+├── examples/          # Runnable language examples
+├── web/               # Sinatra app + browser UI
+└── Dockerfile         # Container image definition</code></pre>
                 </div>
-
-                <h3>Core Components</h3>
-                <ul class="feature-list">
-                    <li><strong>Lexer:</strong> Converts source code into tokens</li>
-                    <li><strong>Parser:</strong> Builds an Abstract Syntax Tree from tokens</li>
-                    <li><strong>Interpreter:</strong> Executes the AST and manages program state</li>
-                    <li><strong>Web Interface:</strong> Browser-based code editor and runner</li>
-                </ul>
             </section>
 
-            <!-- Contributing -->
-            <section id="contributing" class="docs-section">
-                <h2>Contributing</h2>
-                <p>We welcome contributions to KnockScript! Whether it's bug fixes, new features, documentation improvements, or examples, your help is appreciated.</p>
-                
-                <h3>How to Contribute</h3>
-                <ol class="numbered-list">
-                    <li><strong>Fork the repository</strong> on GitHub</li>
-                    <li><strong>Clone your fork</strong> locally</li>
-                    <li><strong>Create a feature branch</strong></li>
-                    <li><strong>Make your changes</strong> following the code style guidelines</li>
-                    <li><strong>Test thoroughly</strong></li>
-                    <li><strong>Submit a pull request</strong></li>
-                </ol>
-
-                <div class="info-box">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                        <polyline points="14 2 14 8 20 8"/>
-                    </svg>
-                    <div>
-                        <strong>Full Guidelines:</strong> See <a href="https://github.com/darthvader58/knockscript/blob/main/CONTRIBUTING.md">CONTRIBUTING.md</a> for detailed contribution guidelines
-                    </div>
-                </div>
-
-                <h3>Types of Contributions</h3>
-                <ul class="feature-list">
-                    <li><strong>Bug Fixes:</strong> Fix issues in the lexer, parser, or interpreter</li>
-                    <li><strong>New Features:</strong> Add language constructs or improve existing ones</li>
-                    <li><strong>Documentation:</strong> Improve code comments, examples, or this guide</li>
-                    <li><strong>Web Interface:</strong> Enhance the online editor and user experience</li>
-                    <li><strong>Examples:</strong> Create new example programs showcasing language features</li>
-                    <li><strong>Testing:</strong> Add unit tests or integration tests</li>
-                </ul>
-            </section>
-
-            <!-- API Reference -->
             <section id="api-reference" class="docs-section">
-                <h2>API Reference</h2>
-                
-                <h3>Commands</h3>
+                <h2>Syntax Reference</h2>
                 <div class="api-table">
                     <table>
                         <thead>
                             <tr>
-                                <th>Command</th>
-                                <th>Syntax</th>
-                                <th>Description</th>
+                                <th>Feature</th>
+                                <th>Primary Syntax</th>
+                                <th>Purpose</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td><code>Set</code></td>
-                                <td><code>Set who? variable to value</code></td>
-                                <td>Assign a value to a variable</td>
-                            </tr>
-                            <tr>
-                                <td><code>Print</code></td>
-                                <td><code>Print who? expression</code></td>
-                                <td>Output a value to the console</td>
-                            </tr>
-                            <tr>
-                                <td><code>If</code></td>
-                                <td><code>If who? condition ... Done</code></td>
-                                <td>Conditional execution</td>
-                            </tr>
-                            <tr>
-                                <td><code>While</code></td>
-                                <td><code>While who? condition ... Done</code></td>
-                                <td>Repeat while condition is true</td>
-                            </tr>
-                            <tr>
-                                <td><code>For</code></td>
-                                <td><code>For who? var from start to end ... Done</code></td>
-                                <td>Loop with range</td>
-                            </tr>
-                            <tr>
-                                <td><code>Class</code></td>
-                                <td><code>Class who? Name with attr1 and attr2</code></td>
-                                <td>Define a class</td>
-                            </tr>
-                            <tr>
-                                <td><code>Method</code></td>
-                                <td><code>Method who? name for Class ... Done</code></td>
-                                <td>Define a method</td>
-                            </tr>
-                            <tr>
-                                <td><code>Call</code></td>
-                                <td><code>Call who? method on object</code></td>
-                                <td>Call a method</td>
-                            </tr>
-                            <tr>
-                                <td><code>Push</code></td>
-                                <td><code>Push who? value to array</code></td>
-                                <td>Add to array</td>
-                            </tr>
-                            <tr>
-                                <td><code>Pop</code></td>
-                                <td><code>Pop who? from array</code></td>
-                                <td>Remove from array</td>
-                            </tr>
+                            <tr><td>Print</td><td><code>Lettuce who? expression</code></td><td>Output a value</td></tr>
+                            <tr><td>Assign</td><td><code>Alby-Setin who? name to expression</code></td><td>Store a variable value</td></tr>
+                            <tr><td>If</td><td><code>Anita who? condition</code></td><td>Conditional branching</td></tr>
+                            <tr><td>Else if</td><td><code>Anita also condition</code></td><td>Secondary conditional branch</td></tr>
+                            <tr><td>While</td><td><code>Antil who? condition</code></td><td>Loop while condition is true</td></tr>
+                            <tr><td>For</td><td><code>Wanna who? i from 1 to 5</code></td><td>Numeric loop</td></tr>
+                            <tr><td>Break</td><td><code>Enough who?</code></td><td>Exit current loop</td></tr>
+                            <tr><td>Continue</td><td><code>Carryon who?</code></td><td>Skip to next loop iteration</td></tr>
+                            <tr><td>Function</td><td><code>Doozy who? name with a and b</code></td><td>Define a function</td></tr>
+                            <tr><td>Return</td><td><code>Backatcha who? expression</code></td><td>Return a value</td></tr>
+                            <tr><td>Class</td><td><code>Kit who? Person with name and age</code></td><td>Define a class</td></tr>
+                            <tr><td>Method</td><td><code>Dewey who? greet for Person</code></td><td>Define a class method</td></tr>
+                            <tr><td>Call</td><td><code>Europe who? greet on person</code></td><td>Call method or function</td></tr>
+                            <tr><td>Get attribute</td><td><code>Justin who? age from person</code></td><td>Read an object attribute</td></tr>
+                            <tr><td>List literal</td><td><code>list with 1, 2, 3</code></td><td>Create an array</td></tr>
+                            <tr><td>Dictionary literal</td><td><code>Oxford with name "Alice"</code></td><td>Create a key-value map</td></tr>
+                            <tr><td>Input</td><td><code>Askem "Prompt"</code></td><td>Request user input</td></tr>
+                            <tr><td>Try</td><td><code>Chance who?</code></td><td>Start protected block</td></tr>
+                            <tr><td>Catch</td><td><code>Unlucky</code></td><td>Handle runtime failure</td></tr>
                         </tbody>
                     </table>
                 </div>
-
-                <h3>Keywords</h3>
-                <div class="keyword-grid">
-                    <div class="keyword-card"><code>to</code></div>
-                    <div class="keyword-card"><code>from</code></div>
-                    <div class="keyword-card"><code>with</code></div>
-                    <div class="keyword-card"><code>and</code></div>
-                    <div class="keyword-card"><code>or</code></div>
-                    <div class="keyword-card"><code>not</code></div>
-                    <div class="keyword-card"><code>plus</code></div>
-                    <div class="keyword-card"><code>minus</code></div>
-                    <div class="keyword-card"><code>times</code></div>
-                    <div class="keyword-card"><code>divided by</code></div>
-                    <div class="keyword-card"><code>greater than</code></div>
-                    <div class="keyword-card"><code>less than</code></div>
-                    <div class="keyword-card"><code>equal to</code></div>
-                    <div class="keyword-card"><code>new</code></div>
-                    <div class="keyword-card"><code>list</code></div>
-                    <div class="keyword-card"><code>Otherwise</code></div>
-                    <div class="keyword-card"><code>Done</code></div>
-                </div>
             </section>
 
-            <!-- Footer -->
             <footer class="docs-footer">
                 <p>Made with &lt;3 by <a href="https://github.com/darthvader58" target="_blank">Shashwat Raj</a></p>
                 <p>Licensed under Apache 2.0 • <a href="https://github.com/darthvader58/knockscript">View on GitHub</a></p>
