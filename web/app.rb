@@ -21,6 +21,9 @@ set :bind, '0.0.0.0'
 set :port, ENV['PORT'] || 4567
 set :public_folder, File.dirname(__FILE__) + '/public'
 
+# Allow my portfolio to embed this app; scoped via frame-ancestors below
+set :protection, except: [:frame_options]
+
 # Enable logging
 set :logging, true
 set :dump_errors, true
@@ -29,9 +32,10 @@ set :show_exceptions, false
 
 # CORS headers
 before do
-  headers 'Access-Control-Allow-Origin' => '*',
+  headers 'Access-Control-Allow-Origin'  => '*',
           'Access-Control-Allow-Methods' => ['GET', 'POST', 'OPTIONS'],
-          'Access-Control-Allow-Headers' => 'Content-Type'
+          'Access-Control-Allow-Headers' => 'Content-Type',
+          'Content-Security-Policy'      => "frame-ancestors 'self' https://shashwatraj.com https://www.shashwatraj.com"
 end
 
 options '*' do
